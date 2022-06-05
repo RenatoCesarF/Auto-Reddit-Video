@@ -26,7 +26,7 @@ def main():
     postsData: Array[Post] = get_response_posts_info(postsResponse)
     
     for post in postsData:
-        print(post.toJson())
+        print(post)
 
      
 def get_access_token():    
