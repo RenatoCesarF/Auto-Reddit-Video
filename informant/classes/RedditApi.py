@@ -31,36 +31,28 @@ class RedditApi:
         res = requests.post("https://www.reddit.com/api/v1/access_token", auth=auth, data=data, headers=self.__headers)
         return res.json()['access_token']
 
-
     def get_subreddit_hot_posts(self, subreddit: str):
-        postsResponse = self.__request_reddit_api(f'/r/{subreddit}/hot').json()
+        postsResponse = self.request_reddit_api(f'/r/{subreddit}/hot').json()
         postsData: Array[Post] = self.__get_posts_from_response(postsResponse)
         return postsData
+    
+    def get_post_replies(self, post: Post) -> Array[Dict]:
+        path = f'/{post.subreddit}/comments/{post.id}/{post.url_posfix}/'
+        replies = self.request_reddit_api(path).json()[1]['data']['children']
+        
+        return replies
 
-    def __request_reddit_api(self, path: str) -> requests.Response:
+    def request_reddit_api(self, path: str) -> requests.Response:
         requested_url = f'{DEFAULT_REDDIT_URL}{path}'
-        response = requests.get(requested_url, headers=self.__headers)
+        response = requests.get(requested_url, headers=self.__headers, params={'limit': '20'})
         return response
 
     def __get_posts_from_response(self, posts: requests.Response) -> Array[Post]:
         postsInstances: Array[Post] = []
         children = posts['data']['children']
         for post in children:
-            postsInstances.append(self.__get_post_data_by_json(post))
+            postsInstances.append(Post.post_from_dict(post))
             
         return postsInstances
             
-    def __get_post_data_by_json(self, post: Dict)-> Post:
-        data = post['data']
-        if data == None:
-            raise Exception("no data was found in post")
-        
-        post = Post(title=data['title'], 
-                    subreddit=data['subreddit_name_prefixed'],
-                    author=data['author'],
-                    up_votes_amount=data['ups'],
-                    content=data['selftext'],
-                    url=data['url']
-                )
-        
-        return post
+   

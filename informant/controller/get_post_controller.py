@@ -10,9 +10,11 @@ class PostController:
         redditApi = RedditApi()
         posts = redditApi.get_subreddit_hot_posts(subreddit)
         
-        choosenPost: Post = posts[0]
-        res['post'] = choosenPost.toJson()
-        res['title_speach_path'] = text_to_speak(choosenPost.title, filename=f'../audios/{choosenPost.get_id()}.mp3')
-        # res['content_speach_path'] = text_to_speak(choosenPost.title, filename=f'./audios/{choosenPost.get_id()}.mp3')
+        choosen_post: Post = posts[0]
+        replies = redditApi.get_post_replies(choosen_post)
         
+        choosen_post.set_replies(replies)
+        
+        res['post'] = choosen_post.toJson()
+        res['title_speach_path'] = text_to_speak(choosen_post.title, filename=f'../audios/{choosen_post.id}.mp3')
         return json.dumps(res)
