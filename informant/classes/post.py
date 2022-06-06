@@ -1,7 +1,11 @@
 from typing import Dict
+from json import JSONEncoder
 import json
 
-class Post:
+from requests import delete
+
+class Post(JSONEncoder):
+    __id: str
     title: str
     author: str
     content: str
@@ -9,8 +13,11 @@ class Post:
     url: str
     up_votes_amount: int
     
+    def default(self, o):
+        return o.__dict__
+    
     def __init__(self, title: str, author: str, content: str, 
-                 subreddit: str, up_votes_amount: int = 0, url: str = ""):
+                 subreddit: str, url: str, up_votes_amount: int = 0):
         self.title = title
         self.author = author
         self.content = content
@@ -18,8 +25,13 @@ class Post:
         self.up_votes_amount = up_votes_amount
         self.url = url
         
+        urlSplited = url.split('/')
+        self.__id = urlSplited[-2]
+    
+    
     def toJson(self) -> Dict:
         dictObject = {
+            'id': self.__id, 
             'title': self.title, 
             'author': self.author, 
             'content': self.content,
@@ -27,11 +39,14 @@ class Post:
             'upVotesAmount': self.up_votes_amount,
             'url': self.url  
         }
-        return json.dumps(dictObject);
+        return dictObject;
 
-        
+    def get_id(self) -> str:
+        return self.__id
+    
     def get_self_representation_in_string(self) -> str:
         return (
+            f"ID: {self.__id}\n"
             f"title: {self.title}\n"
             f"author: {self.author}\n"
             f"subreddit: {self.subreddit}\n"
