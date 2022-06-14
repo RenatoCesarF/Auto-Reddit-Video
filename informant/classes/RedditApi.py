@@ -32,27 +32,43 @@ class RedditApi:
         return res.json()['access_token']
 
     def get_subreddit_hot_posts(self, subreddit: str):
-        postsResponse = self.request_reddit_api(f'/r/{subreddit}/hot').json()
+        postsResponse = self.request_reddit_api(f'/r/{subreddit}/hot')
         postsData: Array[Post] = self.__get_posts_from_response(postsResponse)
         return postsData
     
+    @staticmethod
+    def format_single_post_path_request(subreddit: str, post_id: str, url_posfix:str) -> str:
+        path = f'/r/{subreddit}/comments/{post_id}/{url_posfix}/'
+        return path
+    
     def get_post_replies(self, post: Post) -> Array[Dict]:
-        path = f'/{post.subreddit}/comments/{post.id}/{post.url_posfix}/'
-        replies = self.request_reddit_api(path).json()[1]['data']['children']
+        path = RedditApi.format_single_post_path_request(post.subreddit, post.id, post.url_posfix)
+        replies = self.request_reddit_api(path).get('data').get('children')
         
         return replies
 
-    def request_reddit_api(self, path: str) -> requests.Response:
+    def get_post_by_url_paramters(self,subreddit: str, post_id: str, url_posfix: str) -> Post:
+        path = RedditApi.format_single_post_path_request(subreddit, post_id, url_posfix)
+        response = self.request_reddit_api(path)
+        return self.__get_posts_from_response(response)
+
+    
+    def request_reddit_api(self, path: str) -> Dict:
         requested_url = f'{DEFAULT_REDDIT_URL}{path}'
-        response = requests.get(requested_url, headers=self.__headers, params={'limit': '20'})
+        response: dict = requests.get(requested_url, headers=self.__headers, params={'limit': '20'}).json()[1]
+        
+        if response.get('data') is None:
+            raise Exception('data is none when reach the request_reddit_api function. response: {}'
+                            .format(str(response)))
+            
         return response
 
     def __get_posts_from_response(self, posts: requests.Response) -> Array[Post]:
         postsInstances: Array[Post] = []
-        children = posts['data']['children']
+        children = posts.get('data').get('children')
         for post in children:
             postsInstances.append(Post.post_from_dict(post))
             
         return postsInstances
-            
-   
+
+redditApi = RedditApi()

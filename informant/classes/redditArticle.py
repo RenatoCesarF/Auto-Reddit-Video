@@ -21,16 +21,14 @@ class RedditArticle(JSONEncoder):
         
     @staticmethod
     def create_article_from_dict(data: Dict) -> RedditArticle:
-        try:
-            id = data['id']
-            author = data['author']
-            ups = data['ups']
-            subreddit = data['subreddit']
-            body = data['body']
-        except:
-            return None
+        id = data.get('id')
+        author = data.get('author')
+        ups = data.get('ups')
+        subreddit = data.get('subreddit')
+        body = data.get('body')
+        url = data.get('url')
         
-        reply = RedditArticle(author,body,subreddit,"",id,ups)
+        reply = RedditArticle(author,body,subreddit,url,id,ups)
         return reply
         
     def __get_self_representation_in_string(self) -> str:

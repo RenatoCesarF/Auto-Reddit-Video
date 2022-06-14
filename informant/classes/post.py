@@ -16,27 +16,24 @@ class Post(RedditArticle):
                          up_votes_amount=up_votes_amount, url=url)
         self.title = title
         
-        urlSplited = url.split('/')
-        self.url_posfix = urlSplited[-2]
+        if url is not None:
+            urlSplited = url.split('/')
+            self.url_posfix = urlSplited[-2]
         self.replies = []
-
-    def to_speach(self, path: str):
-        #mach title and content mp3 audio, save and return the path
-        pass
 
     @staticmethod
     def post_from_dict(post: Dict)-> Post:
-        data = post['data']
+        data = post.get('data')
         if data == None:
-            raise Exception("no data was found in post")
+            raise Exception("no data was found in post: {}".format(post))
         
-        post = Post(title=data['title'], 
-                    subreddit=data['subreddit_name_prefixed'],
-                    author=data['author'],
-                    up_votes_amount=data['ups'],
-                    content=data['selftext'],
-                    url=data['url'],
-                    id= data['id']
+        post = Post(title=data.get('title'), 
+                    subreddit=data.get('subreddit_name_prefixed'),
+                    author=data.get('author'),
+                    up_votes_amount=data.get('ups'),
+                    content=data.get('selftext'),
+                    url=data.get('url'),
+                    id= data.get('id')
                 )
         
         return post
@@ -44,9 +41,10 @@ class Post(RedditArticle):
     def set_replies(self, replies: Array[Dict]):
         for rep in replies:
             data = rep['data']
-            self.replies.append(
-                RedditArticle.create_article_from_dict(data)
-            )
+            reply = self.create_article_from_dict(data)
+            if reply is None:
+                continue
+            self.replies.append(reply)
             
            
     def toJson(self) -> Dict:
