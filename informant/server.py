@@ -1,6 +1,4 @@
-from crypt import methods
 import json
-from re import A
 from flask import Flask, request
 
 from classes.RedditApi import RedditApi

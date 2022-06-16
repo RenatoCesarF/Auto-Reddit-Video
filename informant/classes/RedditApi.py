@@ -1,6 +1,6 @@
 from ctypes import Array
 from typing import Dict
-import requests
+from requests import Response, get, post, auth as request_auth
 from os import getenv
 from dotenv import load_dotenv
 
@@ -21,14 +21,19 @@ class RedditApi:
         self.__headers['Authorization'] = f'bearer {self.__token}'
 
     def __get_access_token(self):    
-        auth = requests.auth.HTTPBasicAuth(self.__REDDIT_CLIENT_KEY, self.__REDDIT_SECRET)
+        auth = request_auth.HTTPBasicAuth(self.__REDDIT_CLIENT_KEY, self.__REDDIT_SECRET)
         data = {
             'grant_type': 'password',
             'username': USERNAME,
             'password': self.__REDDIT_PASSWORD
         }
 
-        res = requests.post("https://www.reddit.com/api/v1/access_token", auth=auth, data=data, headers=self.__headers)
+        res = post("https://www.reddit.com/api/v1/access_token", auth=auth, data=data,
+                   headers=self.__headers)
+        
+        if res.json().get('access_token') is None:
+            raise Exception('Access Token Dennied or None')
+        
         return res.json()['access_token']
 
     def get_subreddit_hot_posts(self, subreddit: str):
@@ -55,7 +60,7 @@ class RedditApi:
     
     def request_reddit_api(self, path: str) -> Dict:
         requested_url = f'{DEFAULT_REDDIT_URL}{path}'
-        response: dict = requests.get(requested_url, headers=self.__headers, params={'limit': '20'}).json()[1]
+        response: dict = get(requested_url, headers=self.__headers, params={'limit': '20'}).json()[1]
         
         if response.get('data') is None:
             raise Exception('data is none when reach the request_reddit_api function. response: {}'
@@ -63,7 +68,7 @@ class RedditApi:
             
         return response
 
-    def __get_posts_from_response(self, posts: requests.Response) -> Array[Post]:
+    def __get_posts_from_response(self, posts_response: Response) -> Array[Post]:
         postsInstances: Array[Post] = []
         children = posts.get('data').get('children')
         for post in children:
