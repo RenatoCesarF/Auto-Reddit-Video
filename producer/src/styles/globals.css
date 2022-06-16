@@ -2,11 +2,13 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=News+Cycle:wght@700&display=swap');
 :root{
-    --background-color: #222222;
+    --background-color: #1a1a1b;
     --hightlight-color: #cc3700;
     --font-color: #D7DADC;
 }
-
+body{
+    background-color: var(--background-color);
+}
 h3{
     display: inline;
     margin-block-start: 0.67em;

@@ -4,7 +4,7 @@ import ReactMarkdown from 'react-markdown'
 
 import PostHeader from "./PostHeader"
 import VoteBar from "./VoteBar"
-
+import postFooter from '../../../assets/post-footer.png'
 
 export interface PostInterface{
     content: string,
@@ -19,11 +19,14 @@ const Post = ({content, title, author, subreddit, votesAmount}: PostInterface) =
             <div style={{margin: "15px 35px 0 0"}}>
                 <VoteBar  amount={votesAmount} />
             </div>
-            <body>
+            <div>
                 <PostHeader author={author} subreddit={subreddit}/>
                 <h3>{title}</h3>
                 <ReactMarkdown>{content}</ReactMarkdown>
-            </body>
+            <footer>
+                <img src={postFooter} style={{width: "90%"}}/>
+            </footer>
+            </div>
         </div>
     )
 }
