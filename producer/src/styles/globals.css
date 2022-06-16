@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=News+Cycle:wght@700&display=swap');
+:root{
+    --background-color: #222222;
+    --hightlight-color: #cc3700;
+    --font-color: #D7DADC;
+}
+
+h3{
+    display: inline;
+    margin-block-start: 0.67em;
+    margin-block-end: 0.67em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+p {
+    font-family: 'Noto Sans', sans-serif;
+    font-weight: 100;
+    line-height: 1.4;
+    font-size: 30px;
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 3px;
+    color: rgb(215, 218, 220);
+}
+
+.post-body{
+    max-width: 1070px;
+    background-color: var(--background-color);
+    font-family: 'IBM Plex Sans', sans-serif;
+    color: var(--font-color);
+    border-radius: 10px;
+    font-size:40px;
+    padding: 20px;
+    display: flex;
+}
+
+.hightlight{
+    color: var(--hightlight-color)
+}
+
+.vote-bar-wrapper{
+    display: flex;
+    align-items: center;
+    font-family: 'News Cycle', sans-serif;
+}
+
+.post-header-wrapper{
+    transform: scale(0.7) translateX(-209px);;
+}
+
+.header-text-wrapper{
+    font-size: 40px;
+    align-items: center;
+    display: flex;
+}
+
+.subreddit-img{
+    margin-right: 15px;
+    border-radius: 100%;
+    height: 60px;
+    width: 60px;
+}
+
+.separation-dot{
+    margin: 15px;
+    font-size: 10px3;
+}
+
+
+.big-zoom{
+    transform: scale(1);
+}

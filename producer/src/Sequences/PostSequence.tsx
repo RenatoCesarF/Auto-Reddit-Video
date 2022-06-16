@@ -1,18 +1,18 @@
 import {spring, useCurrentFrame, useVideoConfig} from 'remotion';
-import Post from '../components/Post';
+import Post, { PostInterface } from '../components/PostElements/Post';
 
-export const Title = () => {
+interface PostSequenceInterface{
+	post: PostInterface
+}
+export const PostSequence = ({post}: PostSequenceInterface) => {
 	const videoConfig = useVideoConfig();
 	const frame = useCurrentFrame();
 	return (
-		<h1
+		<div
 			style={{
-				fontFamily: 'SF Pro Text, Helvetica, Arial',
-				fontWeight: 'bold',
 				fontSize: 100,
-				textAlign: 'center',
 				position: 'absolute',
-				bottom: 160,
+				bottom: 600,
 				width: '100%',
 			}}
 		>
@@ -22,27 +22,27 @@ export const Title = () => {
 					marginRight: 10,
 					transform: `scale(${spring({
 						fps: videoConfig.fps,
-						frame: frame - 2 * 5,
+						frame: frame -  5,
 						config: {
 							damping: 100,
-							stiffness: 200,
+							stiffness: 100,
 							mass: 0.5,
 						},
 					})})`,
 					display: 'inline-block',
 				}}
 			>
+				<div className="big-zoom">
 					<Post
-						body='Teste content'
-						subreddit='renatinho'
-						title='titulo teste'
-						numVotes={20}						
-						author='auto-reddit-videos'
-						numComments={2}
-						key={2}
+						content={post.content}
+						subreddit={post.subreddit}
+						title={post.title}
+						votesAmount={post.votesAmount}
+						author={post.author}
+						key={0}
 					/>
-				</span>
-		
-		</h1>
+				</div>
+			</span>
+		</div>
 	);
 };

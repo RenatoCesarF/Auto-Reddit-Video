@@ -11,8 +11,6 @@
   "repository": {},
   "license": "UNLICENSED",
   "dependencies": {
-    "@chakra-ui/icons": "^2.0.2",
-    "@chakra-ui/react": "^2.2.1",
     "@remotion/bundler": "^3.0.0",
     "@remotion/cli": "^3.0.0",
     "@remotion/eslint-config": "^3.0.0",

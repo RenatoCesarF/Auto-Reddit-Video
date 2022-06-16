@@ -1,32 +1,28 @@
 import {interpolate, Sequence, useCurrentFrame, useVideoConfig} from 'remotion';
-import {Title} from './HelloWorld/Title';
+import { PostInterface } from './components/PostElements/Post';
+import {PostSequence} from './Sequences/PostSequence';
 
 export const HelloWorld: React.FC<{
 	titleText: string;
 	titleColor: string;
-}> = ({titleText, titleColor}) => {
+}> = () => {
 	const frame = useCurrentFrame();
 	const videoConfig = useVideoConfig();
 
-	const opacity = interpolate(
-		frame,
-		[videoConfig.durationInFrames - 25, videoConfig.durationInFrames - 15],
-		[1, 0],
-		{
-			extrapolateLeft: 'clamp',
-			extrapolateRight: 'clamp',
-		}
-	);
-	const transitionStart = 25;
+	const videoPost: PostInterface = {
+		content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+		title: 'A test Post for sure',
+		author: 'RenatoCesarF',
+		subreddit: 'r/AskReddit',
+		votesAmount: 100
+	}
 
 	return (
-		<div style={{flex: 1, backgroundColor: 'white'}}>
-			<div style={{opacity}}>
+		<div style={{flex: 1, backgroundColor: "white"}}>
+			<div>
 				<Sequence from={0} durationInFrames={videoConfig.durationInFrames}>
-					<Title key={3} />
+					<PostSequence post={videoPost}/>
 				</Sequence>
-
-
 			</div>
 		</div>
 	);
