@@ -1,6 +1,7 @@
 import {interpolate, Sequence, useCurrentFrame, useVideoConfig} from 'remotion';
 import { PostInterface } from './components/PostElements/Post';
 import {PostSequence} from './Sequences/PostSequence';
+import { ReplySequence } from './Sequences/ReplySequence';
 
 export const HelloWorld: React.FC<{
 	titleText: string;
@@ -20,8 +21,11 @@ export const HelloWorld: React.FC<{
 	return (
 		<div style={{flex: 1, backgroundColor: "white"}}>
 			<div>
-				<Sequence from={0} durationInFrames={videoConfig.durationInFrames}>
+				<Sequence from={0} durationInFrames={100}>
 					<PostSequence post={videoPost}/>
+				</Sequence>
+				<Sequence from={50} durationInFrames={videoConfig.durationInFrames}>
+					<ReplySequence reply={videoPost}/>
 				</Sequence>
 			</div>
 		</div>

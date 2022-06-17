@@ -1,6 +1,4 @@
-import React from 'react'
 import ReactMarkdown from 'react-markdown'
-// import ReactDom from 'react-dom'
 
 import PostHeader from "./PostHeader"
 import VoteBar from "./VoteBar"

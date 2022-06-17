@@ -5,15 +5,16 @@ type flexDirectionType = "row" | "column";
 
 interface VoteBarInterface{ 
     amount: number, 
-    flexDirection?: flexDirectionType
+    flexDirection?: flexDirectionType,
+    iconSize?: number
 }
-const VoteBar = ({amount, flexDirection = 'column'}: VoteBarInterface) =>{
+const VoteBar = ({amount, flexDirection = 'column', iconSize = 50}: VoteBarInterface) =>{
 
     return(
         <div className={'vote-bar-wrapper'} style={{"flexDirection": flexDirection}}> 
-            <TbArrowBigTop  size={50} className="hightlight"/>
+            <TbArrowBigTop  size={iconSize} className="hightlight"/>
             <span style={{fontSize: "25px"}}>{amount}</span>
-            <TbArrowBigDown size={50} style={{color: "#818384"}}/>
+            <TbArrowBigDown size={iconSize} style={{color: "#818384"}}/>
         </div>
     )
 }
