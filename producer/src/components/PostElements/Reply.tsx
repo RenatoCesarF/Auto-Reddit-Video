@@ -9,7 +9,7 @@ export interface ReplyInterface {
 }
 const Reply = ({author, content, votesAmount}: ReplyInterface) => {
   return (
-    <div className="post-body"> 
+    <div className="post-body" style={{flexDirection: "column"}}>  
       <div style={{display: "flex", alignItems: "center"}}>
         <img src="https://via.placeholder.com/100" className="author-img"/>
         <div className="reply-header-text-wrapper margin-around">
