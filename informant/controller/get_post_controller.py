@@ -7,7 +7,7 @@ from text_to_speak.tik_tok_text_to_speak import text_to_speak
 from text_to_speak.default_text_to_speak import default_text_to_speak
 
 class PostController:
-    def get_single_post(subreddit: str = 'AskReddit'):
+    def get_single_post(subreddit: str = 'gamedev'):
         res = {}
         posts = redditApi.get_subreddit_hot_posts(subreddit)
         

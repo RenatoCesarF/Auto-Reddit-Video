@@ -1,17 +1,12 @@
 import axios from "axios";
 
 
-export default function getPostByInfo(subreddit: string, id: string, postFixInfo: string){
-}
+const DEFAULT_URL = "https://7f34-170-254-139-207.sa.ngrok.io"
+export async function getRandomPost(subreddit: string){
+  let response = await axios.get(`${DEFAULT_URL}/get_post_data?subreddit=${subreddit}`)
 
-export function getRandomPost(subreddit: string){
-  axios.get(`http://127.0.0.1:5000/get_post_data?subreddit=${subreddit}`)
-    .then(res => {
-      console.log(`statusCode: ${res.status}`);
-      console.log(res);
-  })
-  .catch(error => {
-    console.error(error);
-  });
-  //return data
+  if(response.status != 200){
+    throw new Error(response.status + response.data);
+  }
+  return response.data
 }

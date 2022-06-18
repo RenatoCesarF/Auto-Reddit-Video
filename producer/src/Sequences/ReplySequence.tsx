@@ -34,10 +34,10 @@ export const ReplySequence = ({reply}: ReplySequenceInterface) => {
 			>
 				<div className="big-zoom">
 					<Reply
+						key={0}
 						content={reply.content}
 						votesAmount={reply.votesAmount}
 						author={reply.author}
-						key={0}
 					/>
 				</div>
 			</span>

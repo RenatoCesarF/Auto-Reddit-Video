@@ -3,6 +3,7 @@ import ReactMarkdown from 'react-markdown'
 import PostHeader from "./PostHeader"
 import VoteBar from "./VoteBar"
 import postFooter from '../../../assets/post-footer.png'
+import { Img } from 'remotion'
 
 export interface PostInterface{
     content: string,
@@ -19,10 +20,12 @@ const Post = ({content, title, author, subreddit, votesAmount}: PostInterface) =
             </div>
             <div>
                 <PostHeader author={author} subreddit={subreddit}/>
-                <h3 style={{margin: "10px 0 20px 0"}}>{title}</h3>
+                <h3 style={{margin: "10px 0 20px 0"}}>
+                    <ReactMarkdown>{title}</ReactMarkdown>
+                </h3>
                 <ReactMarkdown>{content}</ReactMarkdown>
                 <footer>
-                    <img src={postFooter} style={{width: "90%"}}/>
+                    <Img src={postFooter} style={{width: "90vw", maxWidth: "90vw"}}/>
                 </footer>
             </div>
         </div>

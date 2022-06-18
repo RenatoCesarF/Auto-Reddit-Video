@@ -11,7 +11,7 @@ interface VoteBarInterface{
 const VoteBar = ({amount, flexDirection = 'column', iconSize = 50}: VoteBarInterface) =>{
 
     return(
-        <div className={'vote-bar-wrapper'} style={{"flexDirection": flexDirection}}> 
+        <div className='vote-bar-wrapper' style={{flexDirection: flexDirection}}> 
             <TbArrowBigTop  size={iconSize} className="hightlight"/>
             <span style={{fontSize: "25px"}}>{amount}</span>
             <TbArrowBigDown size={iconSize} style={{color: "#818384"}}/>

@@ -1,21 +1,19 @@
-import {spring, useCurrentFrame, useVideoConfig, 	Audio,} from 'remotion';
+import {spring, useCurrentFrame, useVideoConfig, 	Audio, Img, staticFile,} from 'remotion';
+import Loading from '../components/Loading';
 import Post, { PostInterface } from '../components/PostElements/Post';
 
 interface PostSequenceInterface{
 	post: PostInterface,
-	speachPath: string
 }
-export const PostSequence = ({post, speachPath}: PostSequenceInterface) => {
+export const PostSequence = ({post}: PostSequenceInterface) => {
 	const videoConfig = useVideoConfig();
 	const frame = useCurrentFrame();
+
 	return (
-		<>
-		{speachPath ? <Audio src={speachPath}/> : <></>}
 		<div
 			style={{
-				fontSize: 100,
 				position: 'absolute',
-				bottom: 600,
+				top: "15%",
 				width: '100%',
 			}}
 		>
@@ -23,6 +21,7 @@ export const PostSequence = ({post, speachPath}: PostSequenceInterface) => {
 				style={{
 					marginLeft: 10,
 					marginRight: 10,
+					display: 'inline-block',
 					transform: `scale(${spring({
 						fps: videoConfig.fps,
 						frame: frame -  5,
@@ -32,21 +31,19 @@ export const PostSequence = ({post, speachPath}: PostSequenceInterface) => {
 							mass: 0.5,
 						},
 					})})`,
-					display: 'inline-block',
 				}}
 			>
 				<div className="big-zoom">
 					<Post
+						key={1}
 						content={post.content}
 						subreddit={post.subreddit}
 						title={post.title}
 						votesAmount={post.votesAmount}
-						author={post.author}
-						key={0}
+						author={post.author} 
 					/>
 				</div>
 			</span>
 		</div>
-		</>
 	);
 };
