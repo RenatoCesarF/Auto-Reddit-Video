@@ -17,10 +17,10 @@ class RedditApi:
         self.__REDDIT_PASSWORD = getenv('REDDIT_PASSWORD')
         self.__headers = {'User-Agent': 'auto-video/0.0.1'}
         self.__token = ''
-        self.__token = self.__get_access_token()
+        self.__token = self._get_access_token()
         self.__headers['Authorization'] = f'bearer {self.__token}'
 
-    def __get_access_token(self):    
+    def _get_access_token(self):    
         auth = request_auth.HTTPBasicAuth(self.__REDDIT_CLIENT_KEY, self.__REDDIT_SECRET)
         data = {
             'grant_type': 'password',
@@ -38,7 +38,7 @@ class RedditApi:
 
     def get_subreddit_hot_posts(self, subreddit: str):
         postsResponse = self.request_reddit_api(f'/r/{subreddit}/hot')
-        postsData: Array[Post] = self.__get_posts_from_response(postsResponse)
+        postsData: Array[Post] = self._get_posts_from_response(postsResponse)
         return postsData
     
     @staticmethod
@@ -55,24 +55,24 @@ class RedditApi:
     def get_post_by_url_paramters(self,subreddit: str, post_id: str, url_posfix: str) -> Post:
         path = RedditApi.format_single_post_path_request(subreddit, post_id, url_posfix)
         response = self.request_reddit_api(path)
-        return self.__get_posts_from_response(response)
+        return self._get_posts_from_response(response)
 
     
     def request_reddit_api(self, path: str) -> Dict:
         requested_url = f'{DEFAULT_REDDIT_URL}{path}'
-        response: dict = get(requested_url, headers=self.__headers, params={'limit': '20'}).json()[1]
-        
+        response: dict = get(requested_url, headers=self.__headers, params={'limit': '20'}).json()
         if response.get('data') is None:
             raise Exception('data is none when reach the request_reddit_api function. response: {}'
                             .format(str(response)))
             
         return response
 
-    def __get_posts_from_response(self, posts_response: Response) -> Array[Post]:
+    def _get_posts_from_response(self, posts_response: Response) -> Array[Post]:
         postsInstances: Array[Post] = []
-        children = posts.get('data').get('children')
+        children = posts_response.get('data').get('children')
+
         for post in children:
-            postsInstances.append(Post.post_from_dict(post))
+            postsInstances.append(Post.create_from_dict(post))
             
         return postsInstances
 

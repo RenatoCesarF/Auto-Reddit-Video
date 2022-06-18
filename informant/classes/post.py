@@ -1,6 +1,5 @@
 from __future__ import annotations
 from ctypes import Array
-from tkinter import E
 from typing import Dict
 
 from classes.redditArticle import RedditArticle
@@ -22,11 +21,11 @@ class Post(RedditArticle):
         self.replies = []
 
     @staticmethod
-    def post_from_dict(post: Dict)-> Post:
+    def create_from_dict(post: Dict)-> Post:
         data = post.get('data')
         if data == None:
             raise Exception("no data was found in post: {}".format(post))
-        
+    
         post = Post(title=data.get('title'), 
                     subreddit=data.get('subreddit_name_prefixed'),
                     author=data.get('author'),
@@ -57,11 +56,16 @@ class Post(RedditArticle):
             'upVotesAmount': self.up_votes_amount,
             'url': self.url  
         }
-        return dictObject;
+        return dictObject;    
 
-    
+    def __str__(self) -> str:
+        return self.__get_self_representation_in_string()
+      
+                
+    def __repr__(self) -> str:
+        return self.__get_self_representation_in_string()
+            
     def __get_self_representation_in_string(self) -> str:
-        
         return (
             f"ID: {self.id}\n"
             f"title: {self.title}\n"
@@ -72,12 +76,3 @@ class Post(RedditArticle):
             f"content: {self.content}\n"
         )
             
-
-    def __str__(self) -> str:
-        return self.__get_self_representation_in_string()
-      
-                
-    def __repr__(self) -> str:
-        return self.__get_self_representation_in_string()
-            
- 

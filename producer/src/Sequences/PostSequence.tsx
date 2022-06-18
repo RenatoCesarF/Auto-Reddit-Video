@@ -1,13 +1,16 @@
-import {spring, useCurrentFrame, useVideoConfig} from 'remotion';
+import {spring, useCurrentFrame, useVideoConfig, 	Audio,} from 'remotion';
 import Post, { PostInterface } from '../components/PostElements/Post';
 
 interface PostSequenceInterface{
-	post: PostInterface
+	post: PostInterface,
+	speachPath: string
 }
-export const PostSequence = ({post}: PostSequenceInterface) => {
+export const PostSequence = ({post, speachPath}: PostSequenceInterface) => {
 	const videoConfig = useVideoConfig();
 	const frame = useCurrentFrame();
 	return (
+		<>
+		{speachPath ? <Audio src={speachPath}/> : <></>}
 		<div
 			style={{
 				fontSize: 100,
@@ -44,5 +47,6 @@ export const PostSequence = ({post}: PostSequenceInterface) => {
 				</div>
 			</span>
 		</div>
+		</>
 	);
 };

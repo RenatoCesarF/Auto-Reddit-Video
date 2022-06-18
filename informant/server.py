@@ -8,11 +8,12 @@ from text_to_speak.tik_tok_text_to_speak import text_to_speak
 
 app = Flask(__name__)
 
-# @app.route('/get_post_data', methods=['GET'])
-# def get_post_speach_data():
-#     return  PostController.get_single_post('AskReddit')
+@app.route('/get_post_data', methods=['GET'])
+def get_post_speach_data():
+    subreddit = request.args.get('subreddit')
+    return  PostController.get_single_post(subreddit)
 
-@app.route('/get_single_post', methods=('GET'))
+@app.route('/get_single_post', methods=(['GET']))
 def get_single_post():
     subreddit = request.args.get('subreddit')
     post_id = request.args.get('post_id')
