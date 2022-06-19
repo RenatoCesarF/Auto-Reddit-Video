@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const DEFAULT_URL = "https://7f34-170-254-139-207.sa.ngrok.io"
+const DEFAULT_URL = "http://127.0.0.1:5000"
 export async function getRandomPost(subreddit: string){
   let response = await axios.get(`${DEFAULT_URL}/get_post_data?subreddit=${subreddit}`)
 

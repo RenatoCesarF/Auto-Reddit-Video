@@ -10,36 +10,33 @@ export const HelloWorld: React.FC<{
 	path: string
 }> = ({post, lenght, path}) => {
 
-	let postAudioFile = null
-	let replyAudioFile = null
-	let background = staticFile('/WANEELA.gif')
 
-	try {
+	let background = staticFile('/WANEELLA.gif')
+	let	postAudioFile = null
+	
+	try{
 		postAudioFile = staticFile('/audios/test.wav')
-		replyAudioFile = staticFile('/audios/test.wav')
-	} catch (error) {
-		
 	}
+	catch(e){
 
+	}
+	
 	return (
-		<div style={{flex: 1, backgroundColor: "white"}}>
-			<Img src={background}/>
+		<div style={{flex: 1}}>
 			<div>
-				{post.content != "" ?
-					<>
-						<Sequence from={0} durationInFrames={lenght}>		
-							<PostSequence post={post} />
-						</Sequence>
-						<Sequence from={12} durationInFrames={lenght}>		
-							{postAudioFile != null ? 
-								<Audio key={34} src={postAudioFile}/> : <></>
-							}
-						</Sequence>
-					</>
-					:
-					<></>
-				}
-			
+				<Sequence key={0} from={0} durationInFrames={lenght}>		
+					<Img src={background}/>
+				</Sequence>
+				
+				<Sequence key={1} from={0} durationInFrames={lenght}>		
+					<PostSequence post={post} />
+				</Sequence>
+				<Sequence key={2} from={10} durationInFrames={lenght}>		
+					{postAudioFile != null ? 
+						<Audio  src={postAudioFile}/> : <></>
+					}
+				</Sequence>
+		
 			</div>
 		</div>
 	);

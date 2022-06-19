@@ -16,18 +16,18 @@ const Post = ({content, title, author, subreddit, votesAmount}: PostInterface) =
     return (
         <div className="post-body"> 
             <div style={{margin: "0px 35px 0 0"}}>
-                <VoteBar  amount={votesAmount} />
+                <VoteBar amount={votesAmount}/>
             </div>
             <div>
                 <PostHeader author={author} subreddit={subreddit}/>
                 <h3 style={{margin: "10px 0 20px 0"}}>
                     <ReactMarkdown>{title}</ReactMarkdown>
                 </h3>
-                <ReactMarkdown>{content}</ReactMarkdown>
+                <ReactMarkdown>{content}</ReactMarkdown> 
                 <footer>
-                    <Img src={postFooter} style={{width: "90vw", maxWidth: "90vw"}}/>
-                </footer>
-            </div>
+                    <Img src={postFooter} style={{width: "90%", maxWidth: "90%"}}/>
+                </footer> 
+            </div> 
         </div>
     )
 }

@@ -1,9 +1,8 @@
 import {spring, useCurrentFrame, useVideoConfig, 	Audio, Img, staticFile,} from 'remotion';
-import Loading from '../components/Loading';
 import Post, { PostInterface } from '../components/PostElements/Post';
 
 interface PostSequenceInterface{
-	post: PostInterface,
+	post: PostInterface
 }
 export const PostSequence = ({post}: PostSequenceInterface) => {
 	const videoConfig = useVideoConfig();
@@ -13,7 +12,7 @@ export const PostSequence = ({post}: PostSequenceInterface) => {
 		<div
 			style={{
 				position: 'absolute',
-				top: "15%",
+				top: 20,
 				width: '100%',
 			}}
 		>
@@ -35,13 +34,12 @@ export const PostSequence = ({post}: PostSequenceInterface) => {
 			>
 				<div className="big-zoom">
 					<Post
-						key={1}
 						content={post.content}
 						subreddit={post.subreddit}
 						title={post.title}
 						votesAmount={post.votesAmount}
 						author={post.author} 
-					/>
+					/> 
 				</div>
 			</span>
 		</div>

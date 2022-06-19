@@ -1,8 +1,9 @@
 from __future__ import print_function # In python 2.7
 import json
 from flask import Flask, request
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from flask_ngrok import run_with_ngrok
+import time
 
 from classes.RedditApi import RedditApi
 from classes.post import Post
@@ -14,11 +15,12 @@ class RA():
     request_amount = 0
 
 app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "*"}})
 app.config['CORS_HEADERS'] = 'Content-Type'
-CORS(app)
-run_with_ngrok(app)
+# run_with_ngrok(app)
 
 @app.route('/get_post_data', methods=['GET'])
+@cross_origin()
 def get_post_speach_data():
     subreddit = request.args.get('subreddit')
     
@@ -34,6 +36,7 @@ def get_post_speach_data():
     return  response
 
 # @app.route('/get_single_post', methods=(['GET']))
+#@cross_origin()
 # def get_single_post():
 #     subreddit = request.args.get('subreddit')
 #     post_id = request.args.get('post_id')
@@ -45,6 +48,7 @@ def get_post_speach_data():
 
 
 @app.route('/')
+@cross_origin()
 def home():
     return "WORKING"
 
