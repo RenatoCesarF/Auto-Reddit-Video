@@ -4,7 +4,8 @@ import { PostSequenceData, ReplySequenceData } from './classes/sequenceData';
 import {PostSequence} from './Sequences/PostSequence';
 import { ReplySequence } from './Sequences/ReplySequence';
 
-const AUDIO_DELAY_IN_FRAMES = 12
+const AUDIO_DELAY = 12
+const VIDEO_DELAY = 10
 
 export const HelloWorld: React.FC<{
 	postSequenceData: PostSequenceData,
@@ -12,12 +13,18 @@ export const HelloWorld: React.FC<{
 	totalLenght?: number
 }> = ({postSequenceData, replySequenceData, totalLenght}) => {
 
-	let background = staticFile('/WANEELLA.gif')
-	let	postAudioFile = staticFile(postSequenceData.path)
-	let	replyAudioFile = staticFile(replySequenceData.path)
+	const replyStartFrame = postSequenceData.lenght + VIDEO_DELAY + AUDIO_DELAY
+	const postCompleteLenght = postSequenceData.lenght + VIDEO_DELAY + AUDIO_DELAY
+
+
+	const background = staticFile('/WANEELLA.gif')
+	const postAudioFile = staticFile(postSequenceData.path)
+	const replyAudioFile = staticFile(replySequenceData.path)
 
 	return (
 		<div style={{flex: 1}}>
+
+			{/* BACKGROUND */}
 			<Sequence key={0} from={0} name="background" durationInFrames={totalLenght}>		
 				<Img src={background}/>
 			</Sequence>
@@ -26,24 +33,24 @@ export const HelloWorld: React.FC<{
 				key={1} 
 				from={0} 
 				name="Post"
-				durationInFrames={postSequenceData.lenght}
+				durationInFrames={postCompleteLenght}
 			>		
 				<PostSequence post={postSequenceData.post} />
 			</Sequence>
 			<Sequence 
 				key={2} 
-				from={AUDIO_DELAY_IN_FRAMES} 
+				from={0 + AUDIO_DELAY} 
 				name="Post Audio"
-				durationInFrames={postSequenceData.lenght + AUDIO_DELAY_IN_FRAMES}
+				durationInFrames={postSequenceData.lenght + AUDIO_DELAY}
 			>		
 				<Audio src={postAudioFile}/>
 			</Sequence>
 			
-			{/* REPLY SEQUENCE WITH AUDIO */}
 
+			{/* REPLY SEQUENCE WITH AUDIO */}
 			<Sequence 
 				key={3} 
-				from={postSequenceData.lenght} 
+				from={replyStartFrame} 
 				durationInFrames={replySequenceData.lenght}
 				name="Reply"
 			>		
@@ -51,9 +58,9 @@ export const HelloWorld: React.FC<{
 			</Sequence> 
 			<Sequence 
 				key={4} 
-				from={postSequenceData.lenght + 5 + AUDIO_DELAY_IN_FRAMES} 
+				from={replyStartFrame + AUDIO_DELAY} 
 				name="Reply Audio"
-				durationInFrames={replySequenceData.lenght + AUDIO_DELAY_IN_FRAMES}
+				durationInFrames={replySequenceData.lenght + AUDIO_DELAY}
 			>		
 				<Audio src={replyAudioFile}/>
 			</Sequence>

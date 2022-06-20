@@ -23,6 +23,7 @@ const DEFAULT_REPLY: ReplyInterface = {
 	votesAmount: 0,
 	content: ''
 }
+
 export const RemotionVideo: React.FC = () => {
 	const [ApiCallHandle] = useState(() => delayRender("== Feching data from API =="));	  
 	const [totalLenght, setTotalLenght] = useState(200) 
@@ -39,6 +40,10 @@ export const RemotionVideo: React.FC = () => {
 	})
 
     const fetchData = useCallback(async () => {
+		if(ready){
+			continueRender(ApiCallHandle);
+			return
+		}
 		const response = await getRandomPost('askReddit')
 		setPostSequence({
 			lenght: Math.round(response.post.speech.lenght.toFixed() * FPS),
@@ -60,7 +65,12 @@ export const RemotionVideo: React.FC = () => {
 				votesAmount: response.reply.upVotesAmount
 			}
 		})
-		setTotalLenght(Math.round((response.post.speech.lenght + response.reply.speech.lenght) * FPS))
+		setTotalLenght(getVideoTotalLenght([
+			response.post.speech.lenght,
+			response.reply.speech.lenght,
+			0.4, //audio delay
+			0.33, //video delay
+		]))
 		// setTotalLenght(120)
 		setReady(true)
 		continueRender(ApiCallHandle);
@@ -88,3 +98,11 @@ export const RemotionVideo: React.FC = () => {
 		</>
 	);
 };
+
+function getVideoTotalLenght(lengths: number[]){
+	let totalLenght: number = 0
+	lengths.forEach((val) =>{
+		totalLenght += val
+	})
+	return Math.round(totalLenght * FPS)
+}
