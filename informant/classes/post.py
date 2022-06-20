@@ -1,11 +1,14 @@
 from __future__ import annotations
 from ctypes import Array
 from typing import Dict
+from requests import Response
 
+from utils.clean_text import clean_text
 from classes.redditArticle import RedditArticle
 
 class Post(RedditArticle):
     title: str
+    mk_title: str
     url_posfix: str
     replies: Array[RedditArticle]
     
@@ -13,7 +16,8 @@ class Post(RedditArticle):
                  subreddit: str, url: str, id: str, up_votes_amount: int = 0):
         super().__init__(author=author, content=content, id=id, subreddit=subreddit,
                          up_votes_amount=up_votes_amount, url=url)
-        self.title = title
+        self.mk_title = title
+        self.title = clean_text(title)
         
         if url is not None:
             urlSplited = url.split('/')
@@ -37,21 +41,31 @@ class Post(RedditArticle):
         
         return post
 
-    def set_replies(self, replies: Array[Dict]):
+    def set_replies_by_dict(self, replies: Dict):
         for rep in replies:
-            data = rep['data']
-            reply = self.create_article_from_dict(data)
+            data = rep.get('data')
+            reply = RedditArticle.create_article_from_dict(data)
             if reply is None:
                 continue
             self.replies.append(reply)
+    
+    @staticmethod
+    def create_posts_from_response(posts_response: Response) -> Array[Post]:
+        postsInstances: Array[Post] = []
+        children = posts_response.get('data').get('children')
+        
+        for post in children:
+            postsInstances.append(Post.create_from_dict(post))
             
+        return postsInstances
+     
            
     def toJson(self) -> Dict:
         dictObject = {
             'id': self.id, 
-            'title': self.title, 
+            'title': self.mk_title, 
             'author': self.author, 
-            'content': self.content,
+            'content': self.mk_content,
             'subreddit': self.subreddit,
             'upVotesAmount': self.up_votes_amount,
             'url': self.url  

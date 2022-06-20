@@ -1,6 +1,7 @@
 import ReactMarkdown from "react-markdown"
 import VoteBar from "./VoteBar"
 import replyFooter from '../../../assets/reply-footer.png'
+import redditUser from '../../../assets/reddit-user.png'
 import { Img } from "remotion"
 
 export interface ReplyInterface {
@@ -12,7 +13,7 @@ const Reply = ({author, content, votesAmount}: ReplyInterface) => {
   return (
     <div className="post-body" style={{flexDirection: "column"}}>  
       <div style={{display: "flex", alignItems: "center"}}>
-        <Img src="https://via.placeholder.com/100" className="author-img"/>
+        <Img src={redditUser} className="author-img"/>
         <div className="reply-header-text-wrapper margin-around">
           <span>{author}</span>
           <span className="separation-dot"> • </span>
@@ -29,8 +30,6 @@ const Reply = ({author, content, votesAmount}: ReplyInterface) => {
         </footer>
       </main>
     </div>
-
-    
   )
 }
 

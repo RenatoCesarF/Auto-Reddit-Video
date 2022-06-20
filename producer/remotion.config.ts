@@ -1,6 +1,6 @@
 import {Config} from 'remotion';
 
-const MINUTES = 10
+const MINUTES = 1
 Config.Rendering.setImageFormat('jpeg');
 Config.Output.setOverwriteOutput(true);
-Config.Puppeteer.setTimeoutInMilliseconds(MINUTES * 60 * 1000 );
+Config.Puppeteer.setTimeoutInMilliseconds(MINUTES * 60 * 1000);

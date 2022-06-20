@@ -101,5 +101,19 @@ p {
     margin-left: 40px;
     margin-top: 18px;
     padding-left: 60px;
+}
+
+.center{
+    color: whitesmoke;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 100px;
+
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #00000096
+
 
 }

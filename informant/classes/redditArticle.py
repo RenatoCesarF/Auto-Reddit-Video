@@ -2,10 +2,13 @@ from __future__ import annotations
 from ast import Dict
 from json import JSONEncoder
 
+from utils.clean_text import clean_text
+
 class RedditArticle(JSONEncoder):
     id: str
     author: str
     content: str
+    mk_content: str
     subreddit: str
     url: str
     up_votes_amount: int
@@ -13,7 +16,8 @@ class RedditArticle(JSONEncoder):
     def __init__(self, author: str, content: str, subreddit: str, 
                  url: str, id: str, up_votes_amount: int = 0):
         self.author = author
-        self.content = content
+        self.mk_content = content
+        self.content = clean_text(str(content))
         self.subreddit = subreddit
         self.up_votes_amount = up_votes_amount
         self.url = url
@@ -26,11 +30,23 @@ class RedditArticle(JSONEncoder):
         ups = data.get('ups')
         subreddit = data.get('subreddit')
         body = data.get('body')
-        url = data.get('url')
+        url = "data.get('url')"
         
-        reply = RedditArticle(author,body,subreddit,url,id,ups)
+        reply = RedditArticle(author, body, subreddit, url, id, ups)
         return reply
-        
+    
+            
+    def toJson(self) -> Dict:
+        dictObject = {
+            'id': self.id, 
+            'author': self.author, 
+            'content': self.mk_content,
+            'subreddit': self.subreddit,
+            'upVotesAmount': self.up_votes_amount,
+            'url': self.url  
+        }
+        return dictObject;    
+    
     def __get_self_representation_in_string(self) -> str:
         return (
             f"ID: {self.id}\n"

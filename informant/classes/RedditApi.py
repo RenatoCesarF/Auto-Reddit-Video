@@ -20,7 +20,7 @@ class RedditApi:
         self.__token = self._get_access_token()
         self.__headers['Authorization'] = f'bearer {self.__token}'
 
-    def _get_access_token(self):    
+    def _get_access_token(self): 
         auth = request_auth.HTTPBasicAuth(self.__REDDIT_CLIENT_KEY, self.__REDDIT_SECRET)
         data = {
             'grant_type': 'password',
@@ -36,44 +36,34 @@ class RedditApi:
         
         return res.json()['access_token']
 
-    def get_subreddit_hot_posts(self, subreddit: str):
+    def get_subreddit_hot_posts(self, subreddit: str) -> Array[Post]:
         postsResponse = self.request_reddit_api(f'/r/{subreddit}/hot')
-        postsData: Array[Post] = self._get_posts_from_response(postsResponse)
+        postsData: Array[Post] = Post.create_posts_from_response(postsResponse)
         return postsData
-    
-    @staticmethod
-    def format_single_post_path_request(subreddit: str, post_id: str, url_posfix:str) -> str:
-        path = f'/r/{subreddit}/comments/{post_id}/{url_posfix}/'
-        return path
-    
-    def get_post_replies(self, post: Post) -> Array[Dict]:
-        path = RedditApi.format_single_post_path_request(post.subreddit, post.id, post.url_posfix)
-        replies = self.request_reddit_api(path).get('data').get('children')
-        
-        return replies
-
-    def get_post_by_url_paramters(self,subreddit: str, post_id: str, url_posfix: str) -> Post:
-        path = RedditApi.format_single_post_path_request(subreddit, post_id, url_posfix)
-        response = self.request_reddit_api(path)
-        return self._get_posts_from_response(response)
-
     
     def request_reddit_api(self, path: str) -> Dict:
         requested_url = f'{DEFAULT_REDDIT_URL}{path}'
-        response: dict = get(requested_url, headers=self.__headers, params={'limit': '20'}).json()
+        print(f"[REQUEST] path: {path}")
+       
+        response: dict = get(requested_url, headers=self.__headers, params={'limit': '10'}).json()
+
+        if type(response) is list: #is a reply data
+            response = response[1]
         if response.get('data') is None:
-            raise Exception('data is none when reach the request_reddit_api function. response: {}'
-                            .format(str(response)))
-            
+            raise Exception(f'request faild on path {path}. \
+                            response: {str(response)}')
         return response
 
-    def _get_posts_from_response(self, posts_response: Response) -> Array[Post]:
-        postsInstances: Array[Post] = []
-        children = posts_response.get('data').get('children')
+    def get_post_replies(self, post: Post) -> Array[Dict]:
+        path = f'/{post.subreddit}/comments/{post.id}/{post.url_posfix}'
+        replies = self.request_reddit_api(path).get('data').get('children')
+        
+        if len(replies) == 0:
+            raise Exception(f"This post Doesnt have replies \n path: {path}")
+        
+        return replies
 
-        for post in children:
-            postsInstances.append(Post.create_from_dict(post))
-            
-        return postsInstances
+    
+
 
 redditApi = RedditApi()
