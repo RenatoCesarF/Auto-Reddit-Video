@@ -20,9 +20,10 @@ const Post = ({content, title, author, subreddit, votesAmount}: PostInterface) =
             </div>
             <div>
                 <PostHeader author={author} subreddit={subreddit}/>
-                <h3 style={{margin: "10px 0 20px 0"}}>
-                    <ReactMarkdown>{title}</ReactMarkdown>
+                <h3>
+                    {title}  
                 </h3>
+    
                 <ReactMarkdown>{content}</ReactMarkdown> 
                 <footer>
                     <Img src={postFooter} style={{width: "90%", maxWidth: "90%"}}/>
