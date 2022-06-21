@@ -7,10 +7,9 @@ from flask_ngrok import run_with_ngrok
 from classes.RedditApi import RedditApi
 from classes.post import Post
 from controller.get_post_controller import PostController
-from text_to_speak.tik_tok_text_to_speak import text_to_speak
 from utils.await_after_multiple_calls import await_after_multiple_calls
 
-
+print("[SETUP] STARTING SERVER...")
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 app.config['CORS_HEADERS'] = 'Content-Type'

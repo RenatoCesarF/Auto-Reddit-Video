@@ -1,10 +1,11 @@
-import {spring, useCurrentFrame, useVideoConfig, 	Audio, Img, staticFile,} from 'remotion';
-import Post, { PostInterface } from '../components/PostElements/Post';
 
-interface PostSequenceInterface{
-	post: PostInterface
+import {spring, useCurrentFrame, useVideoConfig} from 'remotion';
+
+
+interface AnimatedSequenceInterface{
+	children: JSX.Element,
 }
-export const PostSequence = ({post}: PostSequenceInterface) => {
+export const AnimatedSequence = ({children}: AnimatedSequenceInterface) => {
 	const videoConfig = useVideoConfig();
 	const frame = useCurrentFrame();
 
@@ -12,8 +13,12 @@ export const PostSequence = ({post}: PostSequenceInterface) => {
 		<div
 			style={{
 				position: 'absolute',
-				top: 20,
+				top: 0,
+				bottom: 0,
+				marginBottom: "50%",
+				marginTop: "50%",
 				width: '100%',
+				height: '100%'
 			}}
 		>
 			<span
@@ -23,7 +28,7 @@ export const PostSequence = ({post}: PostSequenceInterface) => {
 					display: 'inline-block',
 					transform: `scale(${spring({
 						fps: videoConfig.fps,
-						frame: frame -  5,
+						frame: frame -  4,
 						config: {
 							damping: 100,
 							stiffness: 100,
@@ -33,13 +38,7 @@ export const PostSequence = ({post}: PostSequenceInterface) => {
 				}}
 			>
 				<div className="big-zoom">
-					<Post
-						content={post.content}
-						subreddit={post.subreddit}
-						title={post.title}
-						votesAmount={post.votesAmount}
-						author={post.author} 
-					/> 
+					{children}
 				</div>
 			</span>
 		</div>
