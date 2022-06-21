@@ -4,7 +4,7 @@ from text_to_speak.voices import Voice
 
 DEFAULT_API_PATH = 'https://api16-normal-useast5.us.tiktokv.com/media/api'
 
-def text_to_speak(text: str,  filename: str, voice = Voice.EN_US_002):
+def tik_tok_text_to_speak(text: str,  filename: str, voice = Voice.EN_AU_006):
     if text.__len__() < 5:
         raise Exception(f"To short text {text}")
     
@@ -24,8 +24,7 @@ def format_api_url(text_speaker: Voice, req_text: str) -> str:
 
 def save_mp3(vstr: str, path: str):
     b64d = base64.b64decode(vstr)
-    isExist = os.path.exists(path)
-    
+
     out = open(path, "wb")
     out.write(b64d)
     out.close()
