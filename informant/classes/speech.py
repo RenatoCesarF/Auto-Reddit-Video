@@ -45,7 +45,7 @@ class Speech:
         return dictObject;
 
     @staticmethod
-    def get_speech_type(phrases: list[str]) -> SpeechType:
+    def get_speech_type(phrases: list) -> SpeechType:
         for phrase in phrases:
             if len(phrase) > 200:
                 return SpeechType.DEFAULT

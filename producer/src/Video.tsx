@@ -6,11 +6,10 @@ import LoadingSequence from './components/LoadingSequence';
 import {RedditVideo} from './RedditVideo';																		
 import Config from './utils/configurationValue';
 import { DEFAULT_POST_SEQUENCE, DEFAULT_REPLY_SEQUENCE } from './utils/defaultObjects';
-
+  
 import { getRandomPost } from './utils/getRedditData';
 
-
-export const RemotionVideo: React.FC = () => {
+export const RemotionVideo: React.FC<{backgroundPath?:string}> = ({backgroundPath}) => {
 	const [ApiCallHandle] = useState(() => delayRender("== Feching data from API =="));	  
 	const [totalLenght, setTotalLenght] = useState(200) 
 	const [ready, setReady] = useState(false)
@@ -64,8 +63,9 @@ export const RemotionVideo: React.FC = () => {
 				fps={Config.FPS}
 				defaultProps={{
 					postSequenceData: postSequence,
-					replySequenceData: replySequence,
-					totalLenght: totalLenght
+					replySequenceData: 	replySequence,
+					totalLenght: totalLenght,
+					backgroundPath: backgroundPath ? backgroundPath : '/backgrounds/pizza.gif'
 				}}
 				height={1920}
 				width={1080}

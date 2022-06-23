@@ -36,7 +36,7 @@ class RedditApi:
         
         return res.json()['access_token']
 
-    def get_subreddit_hot_posts(self, subreddit: str) -> Array[Post]:
+    def get_subreddit_hot_posts(self, subreddit: str):
         postsResponse = self.request_reddit_api(f'/r/{subreddit}/hot')
         postsData: Array[Post] = Post.create_posts_from_response(postsResponse)
         return postsData
@@ -54,7 +54,7 @@ class RedditApi:
                             response: {str(response)}')
         return response
 
-    def get_post_replies(self, post: Post) -> Array[Dict]:
+    def get_post_replies(self, post: Post) -> Array:
         path = f'/{post.subreddit}/comments/{post.id}/{post.url_posfix}'
         replies = self.request_reddit_api(path).get('data').get('children')
         

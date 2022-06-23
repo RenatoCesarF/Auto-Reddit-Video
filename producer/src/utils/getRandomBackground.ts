@@ -1,8 +1,14 @@
-import Waneella from '../../assets/backgrounds/WANEELLA.gif'
 
-
-const backgrounds = [Waneella]
+const backgrounds = [
+ "pizza.gif",
+ "space.gif",
+ "vapor-wave.gif",
+ "WANEELLA.gif",
+]
 
 export default function getRandomBackground(){
-  return backgrounds[0]
+  const lenght = backgrounds.length
+  const randomIndex = Math.floor(Math.random() * lenght)
+  return `/backgrounds/${backgrounds[randomIndex]}`
+
 }
