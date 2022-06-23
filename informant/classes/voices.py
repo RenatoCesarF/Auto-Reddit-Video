@@ -18,9 +18,10 @@ class Voice(Enum):
     EN_AU_002 = "en_au_002"                  # English AU - Male
     EN_UK_001 = "en_uk_001"                  # English UK - Male 1
     EN_UK_003 = "en_uk_003"                  # English UK - Male 2
+    
     EN_US_001 = "en_us_001"                  # English US - Female (Int. 1)
-    EN_US_002 = "en_us_002"                  # English US - Female (Int. 2)
-    EN_US_006 = "en_us_006"                  # English US - Male 1
+    EN_US_002 = "en_us_002"                  # English US - Female (Int. 2) #boa
+    EN_US_006 = "en_us_006"                  # English US - Male 1 # boa
     EN_US_007 = "en_us_007"                  # English US - Male 2
     EN_US_009 = "en_us_009"                  # English US - Male 3
     EN_US_010 = "en_us_010"                  # English US - Male 4

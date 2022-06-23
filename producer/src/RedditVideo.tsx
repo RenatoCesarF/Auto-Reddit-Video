@@ -4,20 +4,24 @@ import Post from './components/PostElements/Post';
 import Reply from './components/PostElements/Reply';
 
 import CompactedSequence from './Sequences/CompactedSequence';
+import getRandomBackground from './utils/getRandomBackground';
 
 export const RedditVideo: React.FC<{
 	postSequenceData: PostSequenceData,
 	replySequenceData: ReplySequenceData,
-	totalLenght?: number
-}> = ({postSequenceData, replySequenceData, totalLenght}) => {
+	backgroundPath: string
+	totalLenght?: number,
+}> = ({postSequenceData, replySequenceData, totalLenght, backgroundPath}) => {
 	const secondSequenceStartFrame = postSequenceData.lenght
-	const background = staticFile('/WANEELLA.gif')
+
+	const background = staticFile(backgroundPath)
+
 	return (
 		<div style={{flex: 1}}>
 
 			{/* BACKGROUND */}
 			<Sequence key={0} from={0} name="background" durationInFrames={totalLenght}>		
-				<Img src={background}/>
+				<Img  src={background}/>
 			</Sequence>
 			<CompactedSequence 
 				audioPath={postSequenceData.path} 
@@ -48,4 +52,8 @@ export const RedditVideo: React.FC<{
 };
 
 
+
+function backgroundPath(backgroundPath: any) {
+	throw new Error('Function not implemented.');
+}
 

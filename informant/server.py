@@ -2,7 +2,6 @@ from __future__ import print_function
 
 from flask import Flask, request
 from flask_cors import CORS, cross_origin
-from flask_ngrok import run_with_ngrok
 
 from classes.RedditApi import RedditApi
 from classes.post import Post
