@@ -1,13 +1,18 @@
 
-import {spring, useCurrentFrame, useVideoConfig} from 'remotion';
+import {interpolate, spring, useCurrentFrame, useVideoConfig} from 'remotion';
 
 
 interface AnimatedSequenceInterface{
 	children: JSX.Element,
+	duration: number
 }
-export const AnimatedSequence = ({children}: AnimatedSequenceInterface) => {
+
+
+export const AnimatedSequence = ({children, duration}: AnimatedSequenceInterface) => {
 	const videoConfig = useVideoConfig();
 	const frame = useCurrentFrame();
+
+	const animation = calculateSprintAnimation(duration, frame, videoConfig.fps)
 
 	return (
 		<div
@@ -26,15 +31,7 @@ export const AnimatedSequence = ({children}: AnimatedSequenceInterface) => {
 					marginLeft: 10,
 					marginRight: 10,
 					display: 'inline-block',
-					transform: `scale(${spring({
-						fps: videoConfig.fps,
-						frame: frame -  4,
-						config: {
-							damping: 100,
-							stiffness: 100,
-							mass: 0.5,
-						},
-					})})`,
+					transform: `scale(${animation})`,
 				}}
 			>
 				<div className="big-zoom">
@@ -44,3 +41,24 @@ export const AnimatedSequence = ({children}: AnimatedSequenceInterface) => {
 		</div>
 	);
 };
+
+const calculateSprintAnimation = (duration: number, frame: number, actualFps: any) =>{
+	const startOfEndAnimation = duration - 30
+    const interpolation = interpolate(
+      frame,
+      [0, 50, startOfEndAnimation, duration] ,
+      // v--v---v----------------------v
+      [0, 100, 100, 0]
+    );
+
+	const springAnimation = spring({
+		fps: actualFps,
+		frame: interpolation,
+		config: {
+			damping: 100,
+			stiffness: 100,
+			mass: 0.5,
+		},
+	})
+	return springAnimation
+}
