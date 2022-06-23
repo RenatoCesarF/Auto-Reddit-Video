@@ -1,10 +1,10 @@
 import {Sequence,  staticFile, Img} from 'remotion';
+
 import { PostSequenceData, ReplySequenceData } from './classes/sequenceData';
 import Post from './components/PostElements/Post';
 import Reply from './components/PostElements/Reply';
-
 import CompactedSequence from './Sequences/CompactedSequence';
-import getRandomBackground from './utils/getRandomBackground';
+
 
 export const RedditVideo: React.FC<{
 	postSequenceData: PostSequenceData,
@@ -12,6 +12,7 @@ export const RedditVideo: React.FC<{
 	backgroundPath: string
 	totalLenght?: number,
 }> = ({postSequenceData, replySequenceData, totalLenght, backgroundPath}) => {
+
 	const secondSequenceStartFrame = postSequenceData.lenght
 
 	const background = staticFile(backgroundPath)

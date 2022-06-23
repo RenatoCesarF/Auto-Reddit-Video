@@ -70,6 +70,7 @@ export const RemotionVideo: React.FC<{backgroundPath?:string}> = ({backgroundPat
 				height={1920}
 				width={1080}
 			/>
+	
 	);
 };
 

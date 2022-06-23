@@ -1,8 +1,5 @@
 import { Sequence, staticFile, Audio} from "remotion";
-import Config from "../utils/configurationValue";
-import Configuration from "../utils/configurationValue";
 import { AnimatedSequence } from "./AnimatedSequence";
-
 
 interface CompactedSequenceInterface{
     audioPath: string,
@@ -17,7 +14,7 @@ export default function CompactedSequence({audioPath, lenght, children, from = 0
     return (
         <>
             <Sequence key={3} from={from} durationInFrames={lenght} name="Component">
-                <AnimatedSequence>
+                <AnimatedSequence duration={lenght}>
                     {children}
                 </AnimatedSequence>
             </Sequence><Sequence
