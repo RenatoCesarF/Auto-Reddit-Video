@@ -45,7 +45,7 @@ export const RemotionVideo: React.FC<{backgroundPath?:string}> = ({backgroundPat
 		setTotalLenght(getVideoTotalLenght([
 			response.post.speech.lenght,
 			response.reply.speech.lenght,
-			0.3
+			0.37
 		]))
 		setReady(true)
 		continueRender(ApiCallHandle);
@@ -59,7 +59,7 @@ export const RemotionVideo: React.FC<{backgroundPath?:string}> = ({backgroundPat
 			<Composition
 				id="RedditVideo"
 				component={ready ? RedditVideo : LoadingSequence}
-				durationInFrames={ready ? totalLenght : 100}
+				durationInFrames={ready ? totalLenght : 5}
 				fps={Config.FPS}
 				defaultProps={{
 					postSequenceData: postSequence,

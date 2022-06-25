@@ -4,7 +4,7 @@ from classes.voices import Voice
 
 DEFAULT_API_PATH = 'https://api16-normal-useast5.us.tiktokv.com/media/api'
 
-def tik_tok_text_to_speak(text: str,  filename: str, voice: Voice = Voice.EN_US_006):
+def tik_tok_text_to_speak(text: str,  filename: str, voice: Voice = Voice.EN_US_002):
     if text.__len__() < 5:
         raise Exception(f"To short text {text}")
     

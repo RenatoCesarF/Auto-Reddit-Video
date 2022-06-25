@@ -4,6 +4,8 @@ from classes.RedditApi import redditApi
 from classes.post import Post
 from classes.speech import Speech
 
+from utils.log import log, LogType
+
 from text_to_speak.default_text_to_speak import default_text_to_speak
 
 class PostController:
@@ -19,6 +21,7 @@ class PostController:
         post_speech_text = f'{choosen_post.title}. {choosen_post.content}'
 
         speech_type = Speech.get_speech_type([post_speech_text, choosen_reply.content])
+        log(LogType.INFO, f"Speech Type: {speech_type}")
 
         post_speech = Speech(post_speech_text, choosen_post.id, speech_type)
         reply_speech = Speech(choosen_reply.content, choosen_reply.id, speech_type)
@@ -27,7 +30,7 @@ class PostController:
         res['post']['speech'] = post_speech.toJson()
         res['reply'] = choosen_reply.toJson()
         res['reply']['speech'] = reply_speech.toJson()
-        print(f"[FINISH] audio lenght: {post_speech.lenght_in_seconds}) \n audio type: {speech_type}")
+        log(LogType.INFO, f"FINISHED REQUEST")
         return json.dumps(res)
     
         

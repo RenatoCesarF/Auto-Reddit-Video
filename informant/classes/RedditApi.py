@@ -4,6 +4,7 @@ from requests import Response, get, post, auth as request_auth
 from os import getenv
 from dotenv import load_dotenv
 
+from utils.log import log, LogType
 from classes.post import Post
 
 USERNAME = 'auto-reddit-video'
@@ -43,7 +44,7 @@ class RedditApi:
     
     def request_reddit_api(self, path: str) -> Dict:
         requested_url = f'{DEFAULT_REDDIT_URL}{path}'
-        print(f"[REQUEST] path: {path}")
+        log(LogType.INFO, f"Requesting path {path}")
        
         response: dict = get(requested_url, headers=self.__headers, params={'limit': '10'}).json()
 
