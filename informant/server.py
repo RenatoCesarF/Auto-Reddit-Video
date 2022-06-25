@@ -1,14 +1,15 @@
-from __future__ import print_function 
-
 from flask import Flask, request
 from flask_cors import CORS, cross_origin
 
+from utils.log import log, LogType
 from classes.RedditApi import RedditApi
 from classes.post import Post
 from controller.get_post_controller import PostController
 from utils.await_after_multiple_calls import await_after_multiple_calls
 
-print("[SETUP] STARTING SERVER...")
+
+log(LogType.INFO, "STARTING SERVER...")
+
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 app.config['CORS_HEADERS'] = 'Content-Type'
@@ -23,7 +24,7 @@ def get_post_speech_data():
         response = PostController.get_single_post(subreddit)
         return  response
     except Exception as e:
-        print(f"[SERVER ERROR] {e}")
+        log(LogType.ERROR, f"Server error:\n{e}")
         return {"message": e, "type": "ERROR"}
 
 

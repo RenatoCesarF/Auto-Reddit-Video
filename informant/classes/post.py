@@ -4,6 +4,7 @@ from typing import Dict
 from requests import Response
 
 from utils.clean_text import clean_text
+from utils.log import log, LogType
 from classes.redditArticle import RedditArticle
 
 class Post(RedditArticle):
@@ -28,6 +29,7 @@ class Post(RedditArticle):
     def create_from_dict(post: Dict)-> Post:
         data = post.get('data')
         if data == None:
+            log(LogType.ERROR, f"No data was found in Post {post}")
             raise Exception("no data was found in post: {}".format(post))
     
         post = Post(title=data.get('title'), 
