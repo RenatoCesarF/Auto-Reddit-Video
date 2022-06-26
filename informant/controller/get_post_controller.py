@@ -3,6 +3,7 @@ import json
 from classes.RedditApi import redditApi
 from classes.post import Post
 from classes.speech import Speech
+from classes.redditArticle import RedditArticle
 
 from utils.log import log, LogType
 
@@ -13,11 +14,13 @@ class PostController:
     def get_single_post(subreddit: str = 'askReddit'):
         res = {}
         posts = redditApi.get_subreddit_hot_posts(subreddit)
-        
+
         choosen_post: Post = posts[0]
+        choosen_post.subreddit_img = redditApi.get_subreddit_img(subreddit)
         choosen_post.set_replies_by_dict(redditApi.get_post_replies(choosen_post))
-        choosen_reply: RedditArticle = choosen_post.replies[0]
         
+        choosen_reply: RedditArticle = choosen_post.replies[0]
+        choosen_reply.author_img = redditApi.get_user_avatar(choosen_reply.author)
         post_speech_text = f'{choosen_post.title}. {choosen_post.content}'
 
         speech_type = Speech.get_speech_type([post_speech_text, choosen_reply.content])
@@ -33,6 +36,4 @@ class PostController:
         log(LogType.INFO, f"FINISHED REQUEST")
         return json.dumps(res)
     
-        
-        
-        
+    

@@ -11,6 +11,7 @@ class Post(RedditArticle):
     title: str
     mk_title: str
     url_posfix: str
+    subreddit_img: str
     replies: Array[RedditArticle]
     
     def __init__(self, title: str, author: str, content: str, 
@@ -60,8 +61,7 @@ class Post(RedditArticle):
             postsInstances.append(Post.create_from_dict(post))
             
         return postsInstances
-     
-           
+               
     def toJson(self) -> Dict:
         dictObject = {
             'id': self.id, 
@@ -70,13 +70,13 @@ class Post(RedditArticle):
             'content': self.mk_content,
             'subreddit': self.subreddit,
             'upVotesAmount': self.up_votes_amount,
-            'url': self.url  
+            'url': self.url,
+            "subredditImage": self.subreddit_img
         }
         return dictObject;    
 
     def __str__(self) -> str:
         return self.__get_self_representation_in_string()
-      
                 
     def __repr__(self) -> str:
         return self.__get_self_representation_in_string()

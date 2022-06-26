@@ -8,12 +8,13 @@ export interface ReplyInterface {
   author: string,
   votesAmount: number,
   content: string,
+  authorImage: string,
 }
-const Reply = ({author, content, votesAmount}: ReplyInterface) => {
+const Reply = ({authorImage, author, content, votesAmount}: ReplyInterface) => {
   return (
     <div className="post-body" style={{flexDirection: "column"}}>  
       <div style={{display: "flex", alignItems: "center"}}>
-        <Img src={redditUser} className="author-img"/>
+        <Img src={authorImage} className="author-img"/>
         <div className="reply-header-text-wrapper margin-around">
           <span>{author}</span>
           <span className="separation-dot"> • </span>

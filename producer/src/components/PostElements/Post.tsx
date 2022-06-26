@@ -10,16 +10,18 @@ export interface PostInterface{
     title: string,
     author: string,
     subreddit: string,
+    subredditImage: string,
     votesAmount: number,
 }
-const Post = ({content, title, author, subreddit, votesAmount}: PostInterface) =>{
+const Post = ({content, title, author, subreddit, subredditImage, votesAmount}: PostInterface) =>{
+    console.log(subredditImage)
     return (
         <div className="post-body"> 
             <div style={{margin: "0px 35px 0 0"}}>
                 <VoteBar amount={votesAmount}/>
             </div>
             <div>
-                <PostHeader author={author} subreddit={subreddit}/>
+                <PostHeader author={author} subreddit={subreddit} subredditImage={subredditImage}/>
                 <h3>
                     {title}  
                 </h3>

@@ -16,24 +16,25 @@ export const RedditVideo: React.FC<{
 	const secondSequenceStartFrame = postSequenceData.lenght
 
 	const background = staticFile(backgroundPath)
-
+	
 	return (
 		<div style={{flex: 1}}>
 
 			{/* BACKGROUND */}
-			<Sequence key={0} from={0} name="background" durationInFrames={totalLenght}>		
-				<Img  src={background}/>
+			<Sequence key={0} from={0} name="background" layout='absolute-fill' durationInFrames={totalLenght}>	
+				<Img src={background} />
 			</Sequence>
 			<CompactedSequence 
 				audioPath={postSequenceData.path} 
 				lenght={postSequenceData.lenght}
 			>
 				<Post 
-					content={postSequenceData.post.content} 
+					content={postSequenceData.post.content}
 					title={postSequenceData.post.title}
 					author={postSequenceData.post.author}
 					subreddit={postSequenceData.post.subreddit}
-					votesAmount={postSequenceData.post.votesAmount}
+					votesAmount={postSequenceData.post.votesAmount} 
+					subredditImage={postSequenceData.post.subredditImage}
 				/>
 			</CompactedSequence>
 
@@ -43,9 +44,10 @@ export const RedditVideo: React.FC<{
 				from={secondSequenceStartFrame}
 			>
 				<Reply 
-					content={replySequenceData.reply.content} 
+					content={replySequenceData.reply.content}
 					author={replySequenceData.reply.author}
 					votesAmount={replySequenceData.reply.votesAmount}
+					authorImage={replySequenceData.reply.authorImage}	
 				/>
 			</CompactedSequence>
 		</div>

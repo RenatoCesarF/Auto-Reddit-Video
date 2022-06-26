@@ -3,7 +3,7 @@ from enum import Enum
 
 from text_to_speak.default_text_to_speak import default_text_to_speak
 from text_to_speak.tik_tok_text_to_speak import tik_tok_text_to_speak
-
+from utils.log import log, LogType
 
 class SpeechType(Enum):
     def __str__(self):

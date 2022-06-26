@@ -30,6 +30,7 @@ export const RemotionVideo: React.FC<{backgroundPath?:string}> = ({backgroundPat
 				title: response.post.title,
 				author: response.post.author,
 				subreddit: response.post.subreddit,
+				subredditImage: response.post.subredditImage,
 				votesAmount: response.post.upVotesAmount
 			}
 		})
@@ -39,7 +40,8 @@ export const RemotionVideo: React.FC<{backgroundPath?:string}> = ({backgroundPat
 			reply: {
 				content: response.reply.content,
 				author: response.reply.author,
-				votesAmount: response.reply.upVotesAmount
+				votesAmount: response.reply.upVotesAmount,
+				authorImage: response.reply.authorImage,
 			}
 		})
 		setTotalLenght(getVideoTotalLenght([

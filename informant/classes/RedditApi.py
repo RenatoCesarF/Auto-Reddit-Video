@@ -47,7 +47,6 @@ class RedditApi:
         log(LogType.INFO, f"Requesting path {path}")
        
         response: dict = get(requested_url, headers=self.__headers, params={'limit': '10'}).json()
-
         if type(response) is list: #is a reply data
             response = response[1]
         if response.get('data') is None:
@@ -63,8 +62,11 @@ class RedditApi:
             raise Exception(f"This post Doesnt have replies \n path: {path}")
         
         return replies
-
     
-
-
+    def get_subreddit_img(self, subreddit):
+        return self.request_reddit_api(f'/r/{subreddit}/about').get('data').get('icon_img')
+    
+    def get_user_avatar(self, username):
+        return self.request_reddit_api(f'/user/{username}/about').get('data').get('snoovatar_img')
+    
 redditApi = RedditApi()
