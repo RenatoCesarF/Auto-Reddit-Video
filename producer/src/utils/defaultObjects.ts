@@ -7,12 +7,14 @@ export  const DEFAULT_POST: PostInterface = {
 	title: '',
 	author: '',
 	subreddit: '',
-	votesAmount: 0
+	votesAmount: 0,
+	subredditImage: ""
 }
 export const DEFAULT_REPLY: ReplyInterface = {
 	author: '',
 	votesAmount: 0,
-	content: ''
+	content: '',
+	authorImage: ""
 }
 
 export const DEFAULT_REPLY_SEQUENCE:ReplySequenceData = {

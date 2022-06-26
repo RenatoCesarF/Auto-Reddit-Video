@@ -4,7 +4,7 @@ import { ReplyInterface } from "../components/PostElements/Reply";
 export type PostSequenceData = {
     lenght: number;
     path: string;
-    post: PostInterface ;
+    post: PostInterface;
 }
 
 export type ReplySequenceData = {
