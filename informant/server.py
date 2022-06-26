@@ -28,11 +28,6 @@ def get_post_speech_data():
         return {"message": e, "type": "ERROR"}
 
 
-@app.route('/')
-@cross_origin()
-def home():
-    return "WORKING"
-
 
 if __name__ == '__main__':
     app.run()

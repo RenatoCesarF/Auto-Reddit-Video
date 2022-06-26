@@ -7,6 +7,7 @@ from utils.clean_text import clean_text
 class RedditArticle(JSONEncoder):
     id: str
     author: str
+    author_img: str = None
     content: str
     mk_content: str
     subreddit: str
@@ -40,6 +41,7 @@ class RedditArticle(JSONEncoder):
         dictObject = {
             'id': self.id, 
             'author': self.author, 
+            'authorImage': self.author_img,
             'content': self.mk_content,
             'subreddit': self.subreddit,
             'upVotesAmount': self.up_votes_amount,
