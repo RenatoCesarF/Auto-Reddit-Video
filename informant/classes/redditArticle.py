@@ -43,7 +43,7 @@ class RedditArticle(JSONEncoder):
             'content': self.mk_content,
             'subreddit': self.subreddit,
             'upVotesAmount': self.up_votes_amount,
-            'url': self.url  
+            'url': self.url
         }
         return dictObject;    
     
