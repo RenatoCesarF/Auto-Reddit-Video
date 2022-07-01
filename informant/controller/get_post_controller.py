@@ -29,11 +29,11 @@ class PostController:
         post_speech = Speech(post_speech_text, choosen_post.id, speech_type)
         reply_speech = Speech(choosen_reply.content, choosen_reply.id, speech_type)
       
-        res['post'] = choosen_post.toJson()
-        res['post']['speech'] = post_speech.toJson()
-        res['reply'] = choosen_reply.toJson()
-        res['reply']['speech'] = reply_speech.toJson()
+        res['post'] = choosen_post.to_json()
+        res['post']['speech'] = post_speech.to_json()
+        res['reply'] = choosen_reply.to_json()
+        res['reply']['speech'] = reply_speech.to_json()
         log(LogType.INFO, f"FINISHED REQUEST")
-        return json.dumps(res)
+        return res
     
     

@@ -37,7 +37,7 @@ class RedditArticle(JSONEncoder):
         return reply
     
             
-    def toJson(self) -> Dict:
+    def to_json(self) -> Dict:
         dictObject = {
             'id': self.id, 
             'author': self.author, 

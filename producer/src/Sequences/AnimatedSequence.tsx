@@ -1,14 +1,14 @@
 
-import {interpolate, spring, useCurrentFrame, useVideoConfig} from 'remotion';
+import { interpolate, spring, useCurrentFrame, useVideoConfig } from 'remotion';
 
 
-interface AnimatedSequenceInterface{
+interface AnimatedSequenceInterface {
 	children: JSX.Element,
 	duration: number
 }
 
 
-export const AnimatedSequence = ({children, duration}: AnimatedSequenceInterface) => {
+export const AnimatedSequence = ({ children, duration }: AnimatedSequenceInterface) => {
 	const videoConfig = useVideoConfig();
 	const frame = useCurrentFrame();
 
@@ -42,14 +42,16 @@ export const AnimatedSequence = ({children, duration}: AnimatedSequenceInterface
 	);
 };
 
-const calculateSprintAnimation = (duration: number, frame: number, actualFps: any) =>{
-	const startOfEndAnimation = duration - 30
-    const interpolation = interpolate(
-      frame,
-      [0, 50, startOfEndAnimation, duration] ,
-      // v--v---v----------------------v
-      [0, 100, 100, 0]
-    );
+const calculateSprintAnimation = (duration: number, frame: number, actualFps: any) => {
+	const startAnimation = duration > 20 ? 20 : 10
+	const endAnimation = duration - 30 ?? duration - 20
+
+	const interpolation = interpolate(
+		frame,
+		[0, startAnimation, endAnimation, duration],
+		// v--v---v----------------------v
+		[0, 100, 100, 0]
+	);
 
 	const springAnimation = spring({
 		fps: actualFps,

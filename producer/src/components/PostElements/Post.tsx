@@ -14,7 +14,6 @@ export interface PostInterface{
     votesAmount: number,
 }
 const Post = ({content, title, author, subreddit, subredditImage, votesAmount}: PostInterface) =>{
-    console.log(subredditImage)
     return (
         <div className="post-body"> 
             <div style={{margin: "0px 35px 0 0"}}>

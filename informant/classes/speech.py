@@ -1,4 +1,6 @@
 import audioread
+from time import sleep
+
 from enum import Enum
 
 from text_to_speak.default_text_to_speak import default_text_to_speak
@@ -6,10 +8,11 @@ from text_to_speak.tik_tok_text_to_speak import tik_tok_text_to_speak
 from utils.log import log, LogType
 
 class SpeechType(Enum):
-    def __str__(self):
-        return str(self.value)
     TIKTOK= "TIKTOK"
     GTTS= "GTTS"
+    
+    def __str__(self):
+        return str(self.value)
  
 
 class Speech:
@@ -26,20 +29,25 @@ class Speech:
         log(LogType.INFO, f"Generating speech for:'{text[0:30]} ...'")
         self.file_path = f"../producer/public/audios/{file_path}.wav"
         self.path = f'/audios/{file_path}.wav'
+        self.text = text
+
+        self.generate_audio_with_type(speech_type)
         
-        if speech_type == SpeechType.TIKTOK:
-            tik_tok_text_to_speak(text, filename=self.file_path)
-        else:
-            default_text_to_speak(text, filename=self.file_path)
-        
+
         self.lenght_in_seconds = self._get_lenght_in_seconds()
         log(LogType.INFO, f"Calculated audio lenght {self.lenght_in_seconds}")
     
+    def generate_audio_with_type(self, speech_type):
+        if speech_type == SpeechType.TIKTOK:
+            tik_tok_text_to_speak(self.text, filename=self.file_path)
+        else:
+            default_text_to_speak(self.text, filename=self.file_path)
+        
     def _get_lenght_in_seconds(self):
         with audioread.audio_open(self.file_path) as f:
             return f.duration 
                        
-    def toJson(self) -> dict:
+    def to_json(self) -> dict:
         dictObject = { 
             'lenght': self.lenght_in_seconds,
             'path': self.path

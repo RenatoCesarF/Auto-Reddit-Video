@@ -1,15 +1,17 @@
-import { Sequence, staticFile, Audio} from "remotion";
+import { Sequence, staticFile, Audio } from "remotion";
 import { AnimatedSequence } from "./AnimatedSequence";
 
-interface CompactedSequenceInterface{
+interface CompactedSequenceInterface {
     audioPath: string,
     lenght: number,
     from?: number,
     children: JSX.Element
 }
 
-export default function CompactedSequence({audioPath, lenght, children, from = 0}: CompactedSequenceInterface) {
-	const sequenceAudio = staticFile(audioPath)
+export default function CompactedSequence({ audioPath, lenght, children, from = 0 }: CompactedSequenceInterface) {
+    const sequenceAudio = staticFile(audioPath)
+    if (sequenceAudio === undefined)
+        return <></>
 
     return (
         <>

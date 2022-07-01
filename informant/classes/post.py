@@ -62,7 +62,7 @@ class Post(RedditArticle):
             
         return postsInstances
                
-    def toJson(self) -> Dict:
+    def to_json(self) -> Dict:
         dictObject = {
             'id': self.id, 
             'title': self.mk_title, 

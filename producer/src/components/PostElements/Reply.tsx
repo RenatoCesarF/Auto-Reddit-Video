@@ -11,6 +11,7 @@ export interface ReplyInterface {
   authorImage: string,
 }
 const Reply = ({authorImage, author, content, votesAmount}: ReplyInterface) => {
+  authorImage = authorImage == "" ? redditUser : authorImage
   return (
     <div className="post-body" style={{flexDirection: "column"}}>  
       <div style={{display: "flex", alignItems: "center"}}>

@@ -22,7 +22,7 @@ def get_post_speech_data():
         subreddit = request.args.get('subreddit') 
         await_after_multiple_calls(100)
         response = PostController.get_single_post(subreddit)
-        return  response
+        return  json.dumps(response)
     except Exception as e:
         log(LogType.ERROR, f"Server error:\n{e}")
         return {"message": e, "type": "ERROR"}
