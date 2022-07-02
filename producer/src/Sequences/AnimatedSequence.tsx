@@ -43,7 +43,7 @@ export const AnimatedSequence = ({ children, duration }: AnimatedSequenceInterfa
 };
 
 const calculateSprintAnimation = (duration: number, frame: number, actualFps: any) => {
-	const startAnimation = duration > 20 ? 20 : 10
+	const startAnimation = duration > 30 ? 30 : 15
 	const endAnimation = duration - 30 ?? duration - 20
 
 	const interpolation = interpolate(
