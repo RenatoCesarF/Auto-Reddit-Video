@@ -5,7 +5,7 @@ from enum import Enum
 
 from text_to_speak.default_text_to_speak import default_text_to_speak
 from text_to_speak.tik_tok_text_to_speak import tik_tok_text_to_speak
-from utils.log import log, LogType
+from utils.log import log
 
 class SpeechType(Enum):
     TIKTOK= "TIKTOK"
@@ -26,7 +26,7 @@ class Speech:
     lenght_in_seconds: int
 
     def __init__(self, text: str, file_path: str, speech_type: SpeechType = SpeechType.GTTS):
-        log(LogType.INFO, f"Generating speech for:'{text[0:30]} ...'")
+        log.info(f"Generating speech for:'{text[0:30]} ...'")
         self.file_path = f"../producer/public/audios/{file_path}.wav"
         self.path = f'/audios/{file_path}.wav'
         self.text = text
@@ -35,7 +35,7 @@ class Speech:
         
 
         self.lenght_in_seconds = self._get_lenght_in_seconds()
-        log(LogType.INFO, f"Calculated audio lenght {self.lenght_in_seconds}")
+        log.info(f"Calculated audio lenght {self.lenght_in_seconds}")
     
     def generate_audio_with_type(self, speech_type):
         if speech_type == SpeechType.TIKTOK:

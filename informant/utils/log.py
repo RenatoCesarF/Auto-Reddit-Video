@@ -1,44 +1,24 @@
 from datetime import datetime
-from enum import Enum
-
 from classes.bcolors import bcolors
 
 
-class LogType:
-    ERROR = "ERROR"
-    INFO = "INFO"
-    WARNING = "WARNING"
+class log:
+    @staticmethod
+    def info(text: str):
+        print(f"{bcolors.OKCYAN}[INFO]{bcolors.ENDC} [{log.get_current_time()}] {text}")
 
-def log(log_type: LogType, text: str, use_timer: bool = True):
-    color = get_log_color(log_type)
-    print(f"{color}[{log_type}]{get_spaces_amount(log_type)}", end=f"{bcolors.ENDC}")
-    
-    if use_timer:
-        print(f"[{get_current_time()}] ", end='')
-    
-    print(text)
-    
-def get_log_color(log_type: LogType):
-    if log_type == LogType.ERROR:
-        return bcolors.FAIL
+    @staticmethod
+    def warning(text: str):
+        print(
+            f"{bcolors.WARNING}[WARNING]{bcolors.ENDC} [{log.get_current_time()}] {text}"
+        )
 
-    if log_type == LogType.INFO:
-        return bcolors.OKCYAN
+    @staticmethod
+    def error(text: str):
+        print(f"{bcolors.FAIL}[ERROR]{bcolors.ENDC} [{log.get_current_time()}] {text}")
 
-    if log_type == LogType.WARNING:
-        return bcolors.WARNING
+    @staticmethod
+    def get_current_time():
+        dt_string = datetime.now().strftime("%H:%M:%S")
+        return dt_string
 
-def get_spaces_amount(log_type: LogType):
-    if log_type == LogType.ERROR:
-        return "   " #3
-
-    if log_type == LogType.INFO:
-        return "    " #4
-
-    if log_type == LogType.WARNING:
-        return ' '# 1
-   
-def get_current_time():
-    dt_string = datetime.now().strftime("%H:%M:%S")
-    return dt_string
-        

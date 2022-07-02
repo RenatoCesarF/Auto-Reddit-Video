@@ -21,3 +21,4 @@ class log:
     def get_current_time():
         dt_string = datetime.now().strftime("%H:%M:%S")
         return dt_string
+

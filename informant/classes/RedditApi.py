@@ -4,7 +4,7 @@ from requests import Response, get, post, auth as request_auth
 from os import getenv
 from dotenv import load_dotenv
 
-from utils.log import log, LogType
+from utils.log import log
 from classes.post import Post
 
 USERNAME = 'auto-reddit-video'
@@ -44,7 +44,7 @@ class RedditApi:
     
     def request_reddit_api(self, path: str) -> Dict:
         requested_url = f'{DEFAULT_REDDIT_URL}{path}'
-        log(LogType.INFO, f"Requesting path {path}")
+        log.error(f"Requesting path {path}")
        
         response: dict = get(requested_url, headers=self.__headers, params={'limit': '10'}).json()
         if type(response) is list: #is a reply data

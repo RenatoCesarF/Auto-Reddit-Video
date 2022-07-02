@@ -5,7 +5,7 @@ from classes.post import Post
 from classes.speech import Speech
 from classes.redditArticle import RedditArticle
 
-from utils.log import log, LogType
+from utils.log import log
 
 from text_to_speak.default_text_to_speak import default_text_to_speak
 
@@ -24,7 +24,7 @@ class PostController:
         post_speech_text = f'{choosen_post.title}. {choosen_post.content}'
 
         speech_type = Speech.get_speech_type([post_speech_text, choosen_reply.content])
-        log(LogType.INFO, f"Speech Type: {speech_type}")
+        log.info(f"Speech Type: {speech_type}")
 
         post_speech = Speech(post_speech_text, choosen_post.id, speech_type)
         reply_speech = Speech(choosen_reply.content, choosen_reply.id, speech_type)
@@ -33,7 +33,7 @@ class PostController:
         res['post']['speech'] = post_speech.to_json()
         res['reply'] = choosen_reply.to_json()
         res['reply']['speech'] = reply_speech.to_json()
-        log(LogType.INFO, f"FINISHED REQUEST")
+        log.info(f"FINISHED REQUEST")
         return res
     
     
