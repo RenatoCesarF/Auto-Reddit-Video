@@ -19,7 +19,7 @@ export const RemotionVideo: React.FC<{ backgroundPath?: string }> = ({ backgroun
 	const fetchData = useCallback(async () => {
 		const response = await getRandomPost('askReddit')
 		setPostSequence({
-			lenght: Math.round(response.post.speech.lenght.toFixed() * Config.FPS),
+			lenght: calculateSequenceLenght(response.post.speech.lenght),
 			path: response.post.speech.path,
 			post: {
 				content: response.post.content,
@@ -31,7 +31,7 @@ export const RemotionVideo: React.FC<{ backgroundPath?: string }> = ({ backgroun
 			}
 		})
 		setReplySequence({
-			lenght: Math.round(response.reply.speech.lenght.toFixed() * Config.FPS),
+			lenght: calculateSequenceLenght(response.reply.speech.lenght),
 			path: response.reply.speech.path,
 			reply: {
 				content: response.reply.content,
@@ -72,6 +72,9 @@ export const RemotionVideo: React.FC<{ backgroundPath?: string }> = ({ backgroun
 	);
 };
 
+const calculateSequenceLenght = (lenght: any) => {
+	return Math.round((lenght.toFixed()) * Config.FPS) + 10
+}
 const getVideoTotalLenght = (lengths: number[]) => {
 	let totalLenght: number = 0
 	lengths.forEach((val) => {

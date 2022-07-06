@@ -43,14 +43,17 @@ export const AnimatedSequence = ({ children, duration }: AnimatedSequenceInterfa
 };
 
 const calculateSprintAnimation = (duration: number, frame: number, actualFps: any) => {
-	const startAnimation = duration > 30 ? 30 : 15
-	const endAnimation = duration - 30 ?? duration - 20
+	let startAnimation = duration > 30 ? 30 : 15
+	let endAnimation = duration - 30 ?? duration - 20
+
+	if (startAnimation == endAnimation)
+		startAnimation -= 1
 
 	const interpolation = interpolate(
 		frame,
 		[0, startAnimation, endAnimation, duration],
 		// v--v---v----------------------v
-		[0, 100, 100, 0]
+		[0, 20, 80, 0]
 	);
 
 	const springAnimation = spring({
