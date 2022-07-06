@@ -6,8 +6,8 @@ load_dotenv()
 
 
             
-insta = InstagramAPI()
+insta = InstagramAPI(publication_type="REELS")
 result = insta.publish("http://techslides.com/demos/sample-videos/small.mp4", "testing api posting")
 print(result)
-    
+
 

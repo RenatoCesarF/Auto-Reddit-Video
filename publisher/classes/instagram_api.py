@@ -11,12 +11,17 @@ status_problems_response = ["EXPIRED", "ERROR"]
 
 
 class InstagramAPI:
+    """Can publish videos/reels on instagram
+    :param: publication_type = VIDEO | REELS
+    """
     user_id: str
     __access_token: str
+    publication_type: str
 
-    def __init__(self):
+    def __init__(self, publication_type: str = "VIDEO"):
         self.user_id = getenv("INSTAGRAM_USER_ID")
         self.__access_token = getenv("FACEBOOK_ACCESS_TOKEN")
+        self.publication_type = publication_type
         
         if self.user_id is None:
             log.error("Get enviroment fail")
@@ -26,7 +31,7 @@ class InstagramAPI:
         gets finished and then publishing it"""
         log.info("Creating content Container...")
         container_id = self.create_content_container(video_url, caption)
-
+        log.info(f"Container created, id: {container_id}")
         status = self.get_container_status(container_id)
         
         log.info("Checking status...")
@@ -46,7 +51,7 @@ class InstagramAPI:
 
         return: the id of the container"""
         response = post(
-            f"{BASE_URL}/{self.user_id}/media?video_url={video_url}&caption={caption}&access_token={self.__access_token}&media_type=VIDEO"
+            f"{BASE_URL}/{self.user_id}/media?video_url={video_url}&caption={caption}&access_token={self.__access_token}&media_type={self.publication_type}"
         ).json()
         
         if response.get("error") is not None:
