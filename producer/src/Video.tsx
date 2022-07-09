@@ -11,15 +11,16 @@ import { getRandomPost } from './utils/getRedditData';
 
 export const RemotionVideo: React.FC<{ backgroundPath?: string }> = ({ backgroundPath }) => {
 	const [ApiCallHandle] = useState(() => delayRender("== Feching data from API =="));
-	const [totalLenght, setTotalLenght] = useState(100)
+	const [totalLenght, setTotalLenght] = useState(30)
 	const [ready, setReady] = useState(false)
 	const [postSequence, setPostSequence] = useState<PostSequenceData>(DEFAULT_POST_SEQUENCE)
 	const [replySequence, setReplySequence] = useState<ReplySequenceData>(DEFAULT_REPLY_SEQUENCE)
 
 	const fetchData = useCallback(async () => {
 		const response = await getRandomPost('askReddit')
+		console.log(response)
 		setPostSequence({
-			lenght: calculateSequenceLenght(response.post.speech.lenght),
+			lenght: Math.round(response.post.speech.lenght * Config.FPS) + Config.AUDIO_DELAY,
 			path: response.post.speech.path,
 			post: {
 				content: response.post.content,
@@ -31,7 +32,7 @@ export const RemotionVideo: React.FC<{ backgroundPath?: string }> = ({ backgroun
 			}
 		})
 		setReplySequence({
-			lenght: calculateSequenceLenght(response.reply.speech.lenght),
+			lenght: Math.round(response.reply.speech.lenght * Config.FPS) + Config.AUDIO_DELAY,
 			path: response.reply.speech.path,
 			reply: {
 				content: response.reply.content,
@@ -41,8 +42,8 @@ export const RemotionVideo: React.FC<{ backgroundPath?: string }> = ({ backgroun
 			}
 		})
 		setTotalLenght(getVideoTotalLenght([
-			postSequence.lenght,
-			replySequence.lenght,
+			response.post.speech.lenght,
+			response.reply.speech.lenght,
 			0.37
 		]))
 		setReady(true)
@@ -72,9 +73,6 @@ export const RemotionVideo: React.FC<{ backgroundPath?: string }> = ({ backgroun
 	);
 };
 
-const calculateSequenceLenght = (lenght: any) => {
-	return Math.round((lenght.toFixed()) * Config.FPS) + 10
-}
 const getVideoTotalLenght = (lengths: number[]) => {
 	let totalLenght: number = 0
 	lengths.forEach((val) => {

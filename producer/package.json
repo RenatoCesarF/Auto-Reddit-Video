@@ -13,7 +13,7 @@
     "@remotion/bundler": "^3.0.21",
     "@remotion/cli": "^3.0.21",
     "@remotion/eslint-config": "^3.0.21",
-    "@remotion/gif": "^3.0.27",
+    "@remotion/gif": "^3.0.21",
     "@remotion/renderer": "^3.0.21",
     "axios": "^0.27.2",
     "eslint": "^8.14.0",

@@ -30,9 +30,6 @@ export const RedditVideo: React.FC<{
 					height={height}
 					fit="cover"
 				/>
-				{/* <AbsoluteFill key={77} style={{ justifyContent: 'center', flexDirection: "unset" }}>
-					<Img itemType='gif' src={background} key={88} />
-				</AbsoluteFill> */}
 			</Sequence>
 			<CompactedSequence
 				audioPath={postSequenceData.path}
