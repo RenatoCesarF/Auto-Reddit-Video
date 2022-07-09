@@ -1,6 +1,6 @@
 import audioread
 from time import sleep
-
+from os import remove as os_remove
 from enum import Enum
 
 from text_to_speak.default_text_to_speak import default_text_to_speak
@@ -27,13 +27,11 @@ class Speech:
 
     def __init__(self, text: str, file_path: str, speech_type: SpeechType = SpeechType.GTTS):
         log.info(f"Generating speech for:'{text[0:30]} ...'")
-        self.file_path = f"../producer/public/audios/{file_path}.wav"
-        self.path = f'/audios/{file_path}.wav'
+        self.file_path = file_path
         self.text = text
 
         self.generate_audio_with_type(speech_type)
         
-
         self.lenght_in_seconds = self._get_lenght_in_seconds()
         log.info(f"Calculated audio lenght {self.lenght_in_seconds}")
     
@@ -42,6 +40,13 @@ class Speech:
             tik_tok_text_to_speak(self.text, filename=self.file_path)
         else:
             default_text_to_speak(self.text, filename=self.file_path)
+        log.info(f"Saved mp3 file in {self.file_path}")
+    
+    def set_path(self, new_path):
+        self.path = new_path
+    
+    def delete_generated_file(self):
+        os_remove(self.file_path)
         
     def _get_lenght_in_seconds(self):
         with audioread.audio_open(self.file_path) as f:

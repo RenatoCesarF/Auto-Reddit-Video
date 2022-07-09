@@ -41,8 +41,8 @@ export const RemotionVideo: React.FC<{ backgroundPath?: string }> = ({ backgroun
 			}
 		})
 		setTotalLenght(getVideoTotalLenght([
-			response.post.speech.lenght,
-			response.reply.speech.lenght,
+			postSequence.lenght,
+			replySequence.lenght,
 			0.37
 		]))
 		setReady(true)

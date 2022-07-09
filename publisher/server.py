@@ -1,19 +1,35 @@
 import sys
 import json
 from os import getenv
+import requests
 
-from flask import Flask, request, Response
+from flask import Flask, request, Response, jsonify
 from flask_cors import CORS, cross_origin
 from dotenv import load_dotenv
 
-import requests
+from classes.instagram_api import InstagramAPI
+from classes.log import log
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 app.config['CORS_HEADERS'] = 'Content-Type'
 load_dotenv()
 
-BASE_URL = "https://graph.facebook.com/v14.0"
+
+@app.route("/publish", methods=["POST"])
+def publish():
+    try:
+        video_url = request.args.get('video_url') 
+        caption = request.args.get('caption') 
+        
+        insta = InstagramAPI(publication_type="REELS")
+        response = insta.publish(video_url, caption)
+        return json.dumps(response)
+        
+    except Exception as e:
+        log.error(f"Server error:\n{e}")
+        return {"message": e, "type": "ERROR"}
+
 
 
 @app.route("/", methods=["GET"])
