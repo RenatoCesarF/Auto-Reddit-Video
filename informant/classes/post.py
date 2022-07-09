@@ -9,7 +9,7 @@ from classes.redditArticle import RedditArticle
 
 class Post(RedditArticle):
     title: str
-    mk_title: str
+    markdown_title: str
     url_posfix: str
     subreddit_img: str
     replies: Array[RedditArticle]
@@ -18,7 +18,7 @@ class Post(RedditArticle):
                  subreddit: str, url: str, id: str, up_votes_amount: int = 0):
         super().__init__(author=author, content=content, id=id, subreddit=subreddit,
                          up_votes_amount=up_votes_amount, url=url)
-        self.mk_title = title
+        self.markdown_title = title
         self.title = clean_text(title)
         
         if url is not None:
@@ -65,9 +65,9 @@ class Post(RedditArticle):
     def to_json(self) -> Dict:
         dictObject = {
             'id': self.id, 
-            'title': self.mk_title, 
+            'title': self.markdown_title, 
             'author': self.author, 
-            'content': self.mk_content,
+            'content': self.markdown_content,
             'subreddit': self.subreddit,
             'upVotesAmount': self.up_votes_amount,
             'url': self.url,

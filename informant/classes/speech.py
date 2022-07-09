@@ -6,7 +6,7 @@ from enum import Enum
 from text_to_speak.default_text_to_speak import default_text_to_speak
 from text_to_speak.tik_tok_text_to_speak import tik_tok_text_to_speak
 from utils.log import log
-
+from utils.s3_manager import S3Manager
 class SpeechType(Enum):
     TIKTOK= "TIKTOK"
     GTTS= "GTTS"
@@ -46,8 +46,11 @@ class Speech:
         self.path = new_path
     
     def delete_generated_file(self):
-        os_remove(self.file_path)
-        
+        try:
+            os_remove(self.file_path)
+        except Exception as e:
+            print("File not found to remove " + self.file_path)
+            
     def _get_lenght_in_seconds(self):
         with audioread.audio_open(self.file_path) as f:
             return f.duration 
@@ -55,10 +58,15 @@ class Speech:
     def to_json(self) -> dict:
         dictObject = { 
             'lenght': self.lenght_in_seconds,
-            'path': self.path
+            'path': self.file_path
         }
     
         return dictObject;
+    def upload_speech(self, folder: str, file_name: str) -> None:
+        S3Manager.upload(self.file_path, f"{folder}/{file_name}.wav")
+        self.delete_generated_file()
+        return S3Manager.get_last_uploaded_file_url()
+
 
     @staticmethod
     def get_speech_type(phrases: list) -> SpeechType:

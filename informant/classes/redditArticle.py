@@ -9,7 +9,7 @@ class RedditArticle(JSONEncoder):
     author: str
     author_img: str = None
     content: str
-    mk_content: str
+    markdown_content: str
     subreddit: str
     url: str
     up_votes_amount: int
@@ -17,7 +17,7 @@ class RedditArticle(JSONEncoder):
     def __init__(self, author: str, content: str, subreddit: str, 
                  url: str, id: str, up_votes_amount: int = 0):
         self.author = author
-        self.mk_content = content
+        self.markdown_content = content
         self.content = clean_text(str(content))
         self.subreddit = subreddit
         self.up_votes_amount = up_votes_amount
@@ -42,7 +42,7 @@ class RedditArticle(JSONEncoder):
             'id': self.id, 
             'author': self.author, 
             'authorImage': self.author_img,
-            'content': self.mk_content,
+            'content': self.markdown_content,
             'subreddit': self.subreddit,
             'upVotesAmount': self.up_votes_amount,
             'url': self.url

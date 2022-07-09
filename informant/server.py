@@ -20,7 +20,8 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 @cross_origin()
 def get_post_speech_data():
     try:
-        subreddit = request.args.get('subreddit') 
+        subreddit = request.args.get('subreddit')
+        log.info(str(subreddit))
         await_after_multiple_calls(100)
         response = PostController.get_single_post(subreddit)
         return  json.dumps(response)
