@@ -4,7 +4,7 @@ from classes.RedditApi import redditApi
 from classes.post import Post
 from classes.speech import Speech
 from classes.redditArticle import RedditArticle
-from utils.s3_manager import S3Manager
+from classes.s3_manager import S3Manager
 from utils.log import log
 
 from text_to_speak.default_text_to_speak import default_text_to_speak

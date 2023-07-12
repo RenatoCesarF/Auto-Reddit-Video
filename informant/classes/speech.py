@@ -6,7 +6,7 @@ from enum import Enum
 from text_to_speak.default_text_to_speak import default_text_to_speak
 from text_to_speak.tik_tok_text_to_speak import tik_tok_text_to_speak
 from utils.log import log
-from utils.s3_manager import S3Manager
+from classes.s3_manager import S3Manager
 class SpeechType(Enum):
     TIKTOK= "TIKTOK"
     GTTS= "GTTS"
@@ -63,7 +63,7 @@ class Speech:
     
         return dictObject;
     def upload_speech(self, folder: str, file_name: str) -> None:
-        file_path = S3Manager.upload(self.file_path, f"{folder}/{file_name}.wav")
+        file_path = S3Manager.upload(self.file_path, f"/audio/{folder}/{file_name}.wav")
         self.delete_generated_file()
         return S3Manager.get_last_uploaded_file_url(file_path)
 

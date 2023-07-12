@@ -18,14 +18,13 @@ export const RedditVideo: React.FC<{
 	const background = staticFile(backgroundPath)
 	const { width, height } = useVideoConfig();
 
-
 	return (
 		<div style={{ flex: 1 }}>
 
 			{/* BACKGROUND */}
 			<Sequence key={0} from={0} name="background" durationInFrames={totalLenght}>
 				<Gif
-					src={background}//"https://media.giphy.com/media/3o72F7YT6s0EMFI0Za/giphy.gif"
+					src={background}
 					width={width}
 					height={height}
 					fit="cover"

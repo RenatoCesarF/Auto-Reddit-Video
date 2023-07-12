@@ -19,6 +19,7 @@ class InstagramAPI:
     publication_type: str
 
     def __init__(self, publication_type: str = "VIDEO"):
+        load_dotenv()
         self.user_id = getenv("INSTAGRAM_USER_ID")
         self.__access_token = getenv("FACEBOOK_ACCESS_TOKEN")
         self.publication_type = publication_type

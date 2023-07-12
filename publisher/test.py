@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 
 from classes.instagram_api import InstagramAPI
 from classes.log import log
-load_dotenv()
+
 
 
             

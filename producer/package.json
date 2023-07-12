@@ -5,7 +5,8 @@
   "scripts": {
     "start": "remotion preview src/index.tsx",
     "build": "remotion render src/index.tsx RedditVideo ../out/video.mp4 --concurrency=1",
-    "upgrade": "remotion upgrade"
+    "upgrade": "remotion upgrade",
+    "test": "node test.js"
   },
   "repository": {},
   "license": "UNLICENSED",
